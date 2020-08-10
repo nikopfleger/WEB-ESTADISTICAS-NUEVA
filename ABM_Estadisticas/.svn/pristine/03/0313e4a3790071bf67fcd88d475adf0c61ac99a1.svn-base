@@ -1,0 +1,475 @@
+<?php
+
+/* abmBundle:admin:admin.html.twig */
+class __TwigTemplate_26c0fcecc203506ed29d4062105d56a7aa7769d6eaa2bd854332e2e758c8bac5 extends Twig_Template
+{
+    public function __construct(Twig_Environment $env)
+    {
+        parent::__construct($env);
+
+        // line 1
+        try {
+            $this->parent = $this->env->loadTemplate("abmBundle::layout.html.twig");
+        } catch (Twig_Error_Loader $e) {
+            $e->setTemplateFile($this->getTemplateName());
+            $e->setTemplateLine(1);
+
+            throw $e;
+        }
+
+        $this->blocks = array(
+            'css' => array($this, 'block_css'),
+            'jss' => array($this, 'block_jss'),
+            'body' => array($this, 'block_body'),
+            'forms' => array($this, 'block_forms'),
+            'submit_widget' => array($this, 'block_submit_widget'),
+            'javascript' => array($this, 'block_javascript'),
+        );
+    }
+
+    protected function doGetParent(array $context)
+    {
+        return "abmBundle::layout.html.twig";
+    }
+
+    protected function doDisplay(array $context, array $blocks = array())
+    {
+        $this->parent->display($context, array_merge($this->blocks, $blocks));
+    }
+
+    // line 3
+    public function block_css($context, array $blocks = array())
+    {
+        // line 4
+        echo "\t\t";
+        $this->displayParentBlock("css", $context, $blocks);
+        echo "
+\t\t";
+        // line 5
+        if (isset($context['assetic']['debug']) && $context['assetic']['debug']) {
+            // asset "42cd147_0"
+            $context["asset_url"] = isset($context['assetic']['use_controller']) && $context['assetic']['use_controller'] ? $this->env->getExtension('routing')->getPath("_assetic_42cd147_0") : $this->env->getExtension('assets')->getAssetUrl("_controller/css/admin_admin_1.css");
+            // line 17
+            echo "\t\t\t<link rel=\"stylesheet\" type=\"text/css\" href=\" ";
+            echo twig_escape_filter($this->env, (isset($context["asset_url"]) ? $context["asset_url"] : $this->getContext($context, "asset_url")), "html", null, true);
+            echo "\" />
+\t\t";
+            // asset "42cd147_1"
+            $context["asset_url"] = isset($context['assetic']['use_controller']) && $context['assetic']['use_controller'] ? $this->env->getExtension('routing')->getPath("_assetic_42cd147_1") : $this->env->getExtension('assets')->getAssetUrl("_controller/css/admin_fontAwesomeDatatablesIntegration_2.css");
+            echo "\t\t\t<link rel=\"stylesheet\" type=\"text/css\" href=\" ";
+            echo twig_escape_filter($this->env, (isset($context["asset_url"]) ? $context["asset_url"] : $this->getContext($context, "asset_url")), "html", null, true);
+            echo "\" />
+\t\t";
+            // asset "42cd147_2"
+            $context["asset_url"] = isset($context['assetic']['use_controller']) && $context['assetic']['use_controller'] ? $this->env->getExtension('routing')->getPath("_assetic_42cd147_2") : $this->env->getExtension('assets')->getAssetUrl("_controller/css/admin_jquery.dataTables_3.css");
+            echo "\t\t\t<link rel=\"stylesheet\" type=\"text/css\" href=\" ";
+            echo twig_escape_filter($this->env, (isset($context["asset_url"]) ? $context["asset_url"] : $this->getContext($context, "asset_url")), "html", null, true);
+            echo "\" />
+\t\t";
+            // asset "42cd147_3"
+            $context["asset_url"] = isset($context['assetic']['use_controller']) && $context['assetic']['use_controller'] ? $this->env->getExtension('routing')->getPath("_assetic_42cd147_3") : $this->env->getExtension('assets')->getAssetUrl("_controller/css/admin_jquery.dataTables_themeroller_4.css");
+            echo "\t\t\t<link rel=\"stylesheet\" type=\"text/css\" href=\" ";
+            echo twig_escape_filter($this->env, (isset($context["asset_url"]) ? $context["asset_url"] : $this->getContext($context, "asset_url")), "html", null, true);
+            echo "\" />
+\t\t";
+            // asset "42cd147_4"
+            $context["asset_url"] = isset($context['assetic']['use_controller']) && $context['assetic']['use_controller'] ? $this->env->getExtension('routing')->getPath("_assetic_42cd147_4") : $this->env->getExtension('assets')->getAssetUrl("_controller/css/admin_font-awesome.min_5.css");
+            echo "\t\t\t<link rel=\"stylesheet\" type=\"text/css\" href=\" ";
+            echo twig_escape_filter($this->env, (isset($context["asset_url"]) ? $context["asset_url"] : $this->getContext($context, "asset_url")), "html", null, true);
+            echo "\" />
+\t\t";
+            // asset "42cd147_5"
+            $context["asset_url"] = isset($context['assetic']['use_controller']) && $context['assetic']['use_controller'] ? $this->env->getExtension('routing')->getPath("_assetic_42cd147_5") : $this->env->getExtension('assets')->getAssetUrl("_controller/css/admin_jquery-ui_6.css");
+            echo "\t\t\t<link rel=\"stylesheet\" type=\"text/css\" href=\" ";
+            echo twig_escape_filter($this->env, (isset($context["asset_url"]) ? $context["asset_url"] : $this->getContext($context, "asset_url")), "html", null, true);
+            echo "\" />
+\t\t";
+            // asset "42cd147_6"
+            $context["asset_url"] = isset($context['assetic']['use_controller']) && $context['assetic']['use_controller'] ? $this->env->getExtension('routing')->getPath("_assetic_42cd147_6") : $this->env->getExtension('assets')->getAssetUrl("_controller/css/admin_jquery-ui.structure_7.css");
+            echo "\t\t\t<link rel=\"stylesheet\" type=\"text/css\" href=\" ";
+            echo twig_escape_filter($this->env, (isset($context["asset_url"]) ? $context["asset_url"] : $this->getContext($context, "asset_url")), "html", null, true);
+            echo "\" />
+\t\t";
+            // asset "42cd147_7"
+            $context["asset_url"] = isset($context['assetic']['use_controller']) && $context['assetic']['use_controller'] ? $this->env->getExtension('routing')->getPath("_assetic_42cd147_7") : $this->env->getExtension('assets')->getAssetUrl("_controller/css/admin_jquery-ui.theme_8.css");
+            echo "\t\t\t<link rel=\"stylesheet\" type=\"text/css\" href=\" ";
+            echo twig_escape_filter($this->env, (isset($context["asset_url"]) ? $context["asset_url"] : $this->getContext($context, "asset_url")), "html", null, true);
+            echo "\" />
+\t\t";
+        } else {
+            // asset "42cd147"
+            $context["asset_url"] = isset($context['assetic']['use_controller']) && $context['assetic']['use_controller'] ? $this->env->getExtension('routing')->getPath("_assetic_42cd147") : $this->env->getExtension('assets')->getAssetUrl("_controller/css/admin.css");
+            echo "\t\t\t<link rel=\"stylesheet\" type=\"text/css\" href=\" ";
+            echo twig_escape_filter($this->env, (isset($context["asset_url"]) ? $context["asset_url"] : $this->getContext($context, "asset_url")), "html", null, true);
+            echo "\" />
+\t\t";
+        }
+        unset($context["asset_url"]);
+        // line 19
+        echo "\t
+";
+    }
+
+    // line 22
+    public function block_jss($context, array $blocks = array())
+    {
+        // line 23
+        echo "\t";
+        $this->displayParentBlock("jss", $context, $blocks);
+        echo "
+\t";
+        // line 24
+        if (isset($context['assetic']['debug']) && $context['assetic']['debug']) {
+            // asset "17a4834_0"
+            $context["asset_url"] = isset($context['assetic']['use_controller']) && $context['assetic']['use_controller'] ? $this->env->getExtension('routing')->getPath("_assetic_17a4834_0") : $this->env->getExtension('assets')->getAssetUrl("_controller/js/admin_jquery-ui_1.js");
+            // line 31
+            echo "\t<script src=\"";
+            echo twig_escape_filter($this->env, (isset($context["asset_url"]) ? $context["asset_url"] : $this->getContext($context, "asset_url")), "html", null, true);
+            echo "\"></script>
+\t";
+            // asset "17a4834_1"
+            $context["asset_url"] = isset($context['assetic']['use_controller']) && $context['assetic']['use_controller'] ? $this->env->getExtension('routing')->getPath("_assetic_17a4834_1") : $this->env->getExtension('assets')->getAssetUrl("_controller/js/admin_jquery.dataTables.min_2.js");
+            echo "\t<script src=\"";
+            echo twig_escape_filter($this->env, (isset($context["asset_url"]) ? $context["asset_url"] : $this->getContext($context, "asset_url")), "html", null, true);
+            echo "\"></script>
+\t";
+            // asset "17a4834_2"
+            $context["asset_url"] = isset($context['assetic']['use_controller']) && $context['assetic']['use_controller'] ? $this->env->getExtension('routing')->getPath("_assetic_17a4834_2") : $this->env->getExtension('assets')->getAssetUrl("_controller/js/admin_jquery.center_3.js");
+            echo "\t<script src=\"";
+            echo twig_escape_filter($this->env, (isset($context["asset_url"]) ? $context["asset_url"] : $this->getContext($context, "asset_url")), "html", null, true);
+            echo "\"></script>
+\t";
+            // asset "17a4834_3"
+            $context["asset_url"] = isset($context['assetic']['use_controller']) && $context['assetic']['use_controller'] ? $this->env->getExtension('routing')->getPath("_assetic_17a4834_3") : $this->env->getExtension('assets')->getAssetUrl("_controller/js/admin_admin_4.js");
+            echo "\t<script src=\"";
+            echo twig_escape_filter($this->env, (isset($context["asset_url"]) ? $context["asset_url"] : $this->getContext($context, "asset_url")), "html", null, true);
+            echo "\"></script>
+\t";
+        } else {
+            // asset "17a4834"
+            $context["asset_url"] = isset($context['assetic']['use_controller']) && $context['assetic']['use_controller'] ? $this->env->getExtension('routing')->getPath("_assetic_17a4834") : $this->env->getExtension('assets')->getAssetUrl("_controller/js/admin.js");
+            echo "\t<script src=\"";
+            echo twig_escape_filter($this->env, (isset($context["asset_url"]) ? $context["asset_url"] : $this->getContext($context, "asset_url")), "html", null, true);
+            echo "\"></script>
+\t";
+        }
+        unset($context["asset_url"]);
+    }
+
+    // line 35
+    public function block_body($context, array $blocks = array())
+    {
+        echo "\t
+\t";
+        // line 36
+        $this->displayParentBlock("body", $context, $blocks);
+        echo "
+\t
+\t
+\t
+<div class=\"navbar navbar-default navbar-fixed-top\" role=\"navigation\">
+    <div class=\"container\">
+        
+        ";
+        // line 44
+        echo "        <div class=\"navbar-header\">
+            <button type=\"button\" class=\"navbar-toggle\" data-toggle=\"collapse\" data-target=\".navbar-collapse\">
+                <span class=\"sr-only\">Toggle navigation</span>
+                <span class=\"icon-bar\"></span>
+                <span class=\"icon-bar\"></span>
+                <span class=\"icon-bar\"></span>
+            </button>
+            <a class=\"navbar-brand\" href=\"javascript:void(0)\">ABM Estadísticas</a>
+        </div>
+        
+        
+        <div class=\"collapse navbar-collapse\">
+            <ul class=\"nav navbar-nav navbar-right\">
+                <li><a href=\"http://10.14.41.10:8080/\" target=\"_blank\">Poder Judicial de la Nación</a></li>
+            </ul>
+            <ul class=\"nav navbar-nav\">
+               <li>
+                    <a href=\"#\" class=\"dropdown-toggle\" data-toggle=\"dropdown\">Tablas Página Web<b class=\"caret\"></b></a>
+                    <ul class=\"dropdown-menu multi-level\">
+                        ";
+        // line 64
+        echo "                       ";
+        // line 66
+        echo "                        ";
+        // line 67
+        echo "                        <li class=\"dropdown-submenu\">
+                            <a href=\"javascript:void(0)\" class=\"dropdown-toggle\" data-toggle=\"dropdown\">Tabla Año</a>
+                           \t
+                            <ul class=\"dropdown-menu\">
+                            \t
+                                <li><a href=\"javascript:void(0)\" id=\"tablaAnio\">Mostrar Tabla</a></li>                                
+                                <li><a href=\"javascript:void(0)\" id=\"agregarAnio\">Agregar Año</a></li>
+                            </ul>
+                        </li>
+                        <li class=\"dropdown-submenu\">  
+                            <a href=\"javascript:void(0)\" class=\"dropdown-toggle\" data-toggle=\"dropdown\">Tabla Capítulo</a>   
+                                                     
+                            <ul class=\"dropdown-menu\">
+                                <li><a href=\"javascript:void(0)\" id=\"tablaCapitulo\">Mostrar Tabla</a></li>
+                                <li><a href=\"javascript:void(0)\">Agregar Capítulo</a></li>
+                            </ul>                            
+                        </li>
+                        
+                    </ul>
+                </li>                
+            </ul>
+        </div><!--/.nav-collapse -->
+    </div>
+</div>
+\t
+
+\t
+";
+        // line 95
+        echo "    \t
+";
+        // line 114
+        echo "
+<div id=\"body\"><br>
+\t<div id=\"info\"  class=\"center\">";
+        // line 116
+        echo twig_escape_filter($this->env, (isset($context["mensajeInicial"]) ? $context["mensajeInicial"] : $this->getContext($context, "mensajeInicial")), "html", null, true);
+        echo "</div>
+\t
+\t<div id=\"progressbar\" class=\"progress progress-striped active\">
+    \t<div class=\"progress-bar\" style=\"width: 100%>Cargando</div>
+    </div>
+\t
+\t
+";
+        // line 124
+        echo "
+\t<table id=\"datatable\" class=\"hover compact\"><thead></thead><tbody></tbody></table>
+</div>
+\t
+";
+        // line 129
+        echo "\t
+<div id=\"ALERTA\" title=\"Alerta\">
+\t<div id='alertaMensaje'></div>
+\t<div class=\"ui-dialog-buttonpane ui-widget-content ui-helper-clearfix\">
+\t\t<div class=\"ui-dialog-buttonset\">
+\t\t\t\t<a id='alertaAceptar' class=\"btn ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only\">
+   \t\t\t\t\t<span class=\"ui-button-text\">Si</span></a>
+   \t\t\t\t<a id='alertaCancelar' class=\"btn ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only\">
+   \t\t\t\t\t<span class=\"ui-button-text\">No</span></a>
+   \t\t</div>
+   \t</div>
+</div>
+\t
+\t
+\t";
+        // line 144
+        echo "
+\t
+\t
+ ";
+        // line 147
+        $this->displayBlock('forms', $context, $blocks);
+        // line 203
+        echo "\t
+\t
+";
+    }
+
+    // line 147
+    public function block_forms($context, array $blocks = array())
+    {
+        // line 148
+        echo " 
+ ";
+        // line 149
+        $this->env->getExtension('form')->renderer->setTheme((isset($context["agregarAnio"]) ? $context["agregarAnio"] : $this->getContext($context, "agregarAnio")), array(0 => $this));
+        // line 150
+        echo " 
+ <div id=\"agregarAnioDLG\" title=\"Agregar Año\">
+ \t";
+        // line 152
+        echo         $this->env->getExtension('form')->renderer->renderBlock((isset($context["agregarAnio"]) ? $context["agregarAnio"] : $this->getContext($context, "agregarAnio")), 'form_start');
+        echo "
+    ";
+        // line 153
+        echo $this->env->getExtension('form')->renderer->searchAndRenderBlock((isset($context["agregarAnio"]) ? $context["agregarAnio"] : $this->getContext($context, "agregarAnio")), 'errors');
+        echo "
+
+   
+  <div class='form-group'>
+  \t\t\t ";
+        // line 157
+        echo $this->env->getExtension('form')->renderer->searchAndRenderBlock($this->getAttribute((isset($context["agregarAnio"]) ? $context["agregarAnio"] : $this->getContext($context, "agregarAnio")), "anioId", array()), 'label');
+        echo "
+  \t\t\t <div ";
+        // line 158
+        $this->displayBlock("widget_container_attributes", $context, $blocks);
+        echo " class=\"col-sm-7\" >
+    \t\t \t";
+        // line 159
+        echo $this->env->getExtension('form')->renderer->searchAndRenderBlock($this->getAttribute((isset($context["agregarAnio"]) ? $context["agregarAnio"] : $this->getContext($context, "agregarAnio")), "anioId", array()), 'widget', array("attr" => array("class" => "form-control ui-selectmenu-button ui-widget ui-state-default ui-corner-all")));
+        echo "
+    \t\t </div>
+  </div>
+
+  <div class='form-group'>
+  \t\t\t";
+        // line 164
+        echo $this->env->getExtension('form')->renderer->searchAndRenderBlock($this->getAttribute((isset($context["agregarAnio"]) ? $context["agregarAnio"] : $this->getContext($context, "agregarAnio")), "anioHabilitado", array()), 'label');
+        echo "
+  \t\t<div ";
+        // line 165
+        $this->displayBlock("widget_container_attributes", $context, $blocks);
+        echo " class=\"col-sm-7\">
+\t\t\t\t";
+        // line 166
+        $context['_parent'] = (array) $context;
+        $context['_seq'] = twig_ensure_traversable($this->getAttribute((isset($context["agregarAnio"]) ? $context["agregarAnio"] : $this->getContext($context, "agregarAnio")), "anioHabilitado", array()));
+        $context['loop'] = array(
+          'parent' => $context['_parent'],
+          'index0' => 0,
+          'index'  => 1,
+          'first'  => true,
+        );
+        if (is_array($context['_seq']) || (is_object($context['_seq']) && $context['_seq'] instanceof Countable)) {
+            $length = count($context['_seq']);
+            $context['loop']['revindex0'] = $length - 1;
+            $context['loop']['revindex'] = $length;
+            $context['loop']['length'] = $length;
+            $context['loop']['last'] = 1 === $length;
+        }
+        foreach ($context['_seq'] as $context["_key"] => $context["child"]) {
+            // line 167
+            echo "  \t\t\t\t";
+            echo $this->env->getExtension('form')->renderer->searchAndRenderBlock($context["child"], 'label');
+            echo "
+  \t\t\t\t";
+            // line 168
+            echo $this->env->getExtension('form')->renderer->searchAndRenderBlock($context["child"], 'widget', array("attr" => array("name" => "inlineRadioOptions", "id" => ("inlineRadio" . $this->getAttribute($context["loop"], "index", array())))));
+            echo "
+  \t\t\t\t
+  \t\t\t";
+            ++$context['loop']['index0'];
+            ++$context['loop']['index'];
+            $context['loop']['first'] = false;
+            if (isset($context['loop']['length'])) {
+                --$context['loop']['revindex0'];
+                --$context['loop']['revindex'];
+                $context['loop']['last'] = 0 === $context['loop']['revindex0'];
+            }
+        }
+        $_parent = $context['_parent'];
+        unset($context['_seq'], $context['_iterated'], $context['_key'], $context['child'], $context['_parent'], $context['loop']);
+        $context = array_intersect_key($context, $_parent) + $_parent;
+        // line 171
+        echo "  \t\t</div>
+  </div>
+
+
+  <div class='form-group'>
+\t<div ";
+        // line 176
+        $this->displayBlock("widget_container_attributes", $context, $blocks);
+        echo " class=\"col-sm-7\">
+\t\t  ";
+        // line 177
+        $context['_parent'] = (array) $context;
+        $context['_seq'] = twig_ensure_traversable($this->getAttribute((isset($context["agregarAnio"]) ? $context["agregarAnio"] : $this->getContext($context, "agregarAnio")), "anioOpciones", array()));
+        foreach ($context['_seq'] as $context["_key"] => $context["child"]) {
+            // line 178
+            echo "\t\t     ";
+            echo $this->env->getExtension('form')->renderer->searchAndRenderBlock($context["child"], 'widget');
+            echo "
+\t\t\t ";
+            // line 179
+            echo $this->env->getExtension('form')->renderer->searchAndRenderBlock($context["child"], 'label');
+            echo "
+\t\t \t 
+\t\t  ";
+        }
+        $_parent = $context['_parent'];
+        unset($context['_seq'], $context['_iterated'], $context['_key'], $context['child'], $context['_parent'], $context['loop']);
+        $context = array_intersect_key($context, $_parent) + $_parent;
+        // line 182
+        echo "    </div>";
+        // line 185
+        $this->displayBlock('submit_widget', $context, $blocks);
+        // line 197
+        echo "</div>
+    \t 
+    
+    ";
+        // line 200
+        echo         $this->env->getExtension('form')->renderer->renderBlock((isset($context["agregarAnio"]) ? $context["agregarAnio"] : $this->getContext($context, "agregarAnio")), 'form_end');
+        echo "
+ </div>
+ ";
+    }
+
+    // line 185
+    public function block_submit_widget($context, array $blocks = array())
+    {
+        // line 186
+        echo "<br>
+\t\t<div class=\"ui-dialog-buttonpane ui-widget-content ui-helper-clearfix\">
+\t\t\t<div class=\"ui-dialog-buttonset\">
+    \t\t\t<button type=\"";
+        // line 189
+        echo twig_escape_filter($this->env, ((array_key_exists("type", $context)) ? (_twig_default_filter((isset($context["type"]) ? $context["type"] : $this->getContext($context, "type")), "submit")) : ("submit")), "html", null, true);
+        echo "\" class=\"btn ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only\"  }}>
+     \t  \t\t <span class=\"ui-button-text\">Confirmar</span>
+ \t   \t\t\t</button>
+ \t   \t\t</div>
+ \t   \t</div>";
+    }
+
+    // line 207
+    public function block_javascript($context, array $blocks = array())
+    {
+        // line 208
+        echo "  <script type=\"text/javascript\">
+
+  \$(function() {
+\t\$(\"ui.tooltip\").siblings(\".tooltip\").remove();
+\t\$( document ).tooltip();
+\t});
+\t\$( document ).ready(function() {
+\t\tvar adminObject = new Admin();
+\t\tadminObject.init();
+\t\tadminObject.habilitacionAnio = \"";
+        // line 217
+        echo $this->env->getExtension('routing')->getPath("_habilitacionAnio");
+        echo "\";
+\t\tadminObject.getTablaAnio = \"";
+        // line 218
+        echo $this->env->getExtension('routing')->getPath("_getTablaAnio");
+        echo "\";
+\t\tadminObject.eliminarAnio = \"";
+        // line 219
+        echo $this->env->getExtension('routing')->getPath("_eliminarAnio");
+        echo "\";
+
+\t\t
+\t});
+  </script>
+  
+";
+    }
+
+    public function getTemplateName()
+    {
+        return "abmBundle:admin:admin.html.twig";
+    }
+
+    public function isTraitable()
+    {
+        return false;
+    }
+
+    public function getDebugInfo()
+    {
+        return array (  451 => 219,  447 => 218,  443 => 217,  432 => 208,  429 => 207,  420 => 189,  415 => 186,  412 => 185,  405 => 200,  400 => 197,  398 => 185,  396 => 182,  387 => 179,  382 => 178,  378 => 177,  374 => 176,  367 => 171,  350 => 168,  345 => 167,  328 => 166,  324 => 165,  320 => 164,  312 => 159,  308 => 158,  304 => 157,  297 => 153,  293 => 152,  289 => 150,  287 => 149,  284 => 148,  281 => 147,  275 => 203,  273 => 147,  268 => 144,  252 => 129,  246 => 124,  236 => 116,  232 => 114,  229 => 95,  200 => 67,  198 => 66,  196 => 64,  175 => 44,  165 => 36,  160 => 35,  126 => 31,  122 => 24,  117 => 23,  114 => 22,  109 => 19,  53 => 17,  49 => 5,  44 => 4,  41 => 3,  11 => 1,);
+    }
+}

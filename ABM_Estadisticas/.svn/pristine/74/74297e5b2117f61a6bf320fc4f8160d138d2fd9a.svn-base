@@ -1,0 +1,95 @@
+<?php
+
+namespace abmestadisticas\abmBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Titulo
+ *
+ * @ORM\Table()
+ * @ORM\Entity
+ */
+class Titulo
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="titu_id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $titu_id;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="titu_capitulo", type="integer")
+     */
+    private $titu_capitulo;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="titu_detalle", type="string", length=255)
+     */
+    private $titu_detalle;
+
+
+
+    /**
+     * Get titu_id
+     *
+     * @return integer 
+     */
+    public function getTituId()
+    {
+        return $this->titu_id;
+    }
+
+    /**
+     * Set titu_capitulo
+     *
+     * @param integer $tituCapitulo
+     * @return Titulo
+     */
+    public function setTituCapitulo($tituCapitulo)
+    {
+        $this->titu_capitulo = $tituCapitulo;
+
+        return $this;
+    }
+
+    /**
+     * Get titu_capitulo
+     *
+     * @return integer 
+     */
+    public function getTituCapitulo()
+    {
+        return $this->titu_capitulo;
+    }
+
+    /**
+     * Set titu_detalle
+     *
+     * @param string $tituDetalle
+     * @return Titulo
+     */
+    public function setTituDetalle($tituDetalle)
+    {
+        $this->titu_detalle = $tituDetalle;
+
+        return $this;
+    }
+
+    /**
+     * Get titu_detalle
+     *
+     * @return string 
+     */
+    public function getTituDetalle()
+    {
+        return $this->titu_detalle;
+    }
+}

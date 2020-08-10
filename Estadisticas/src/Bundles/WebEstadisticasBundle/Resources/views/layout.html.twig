@@ -1,0 +1,128 @@
+﻿{% block Settings %}
+
+	<!DOCTYPE html>
+<html>{% endblock %}
+
+<head>
+
+ {% block css %}
+ 	{% stylesheets filter='cssrewrite'
+ 		'bundles/webestadisticas/css/bootstrap/bootstrap.min.css'
+ 		'bundles/webestadisticas/css/bootstrap/bootstrap-theme.min.css'
+ 		'bundles/webestadisticas/plugins/jqueryui/jquery-ui.structure.min.css'
+ 		'bundles/webestadisticas/plugins/jqueryui/jquery-ui.theme.css'
+ 		'bundles/webestadisticas/css/layout.css' 
+ 		'bundles/webestadisticas/plugins/jqueryui/jquery-ui.min.css'
+ 		 output='css/main.css'
+ 	%}
+		<link rel="stylesheet" href="{{ asset_url }}" />
+  	{% endstylesheets %}
+  	
+  	{% stylesheets filter='cssrewrite'
+   
+    'bundles/webestadisticas/fonts/glyphicons-halflings-regular.ttf'
+    'bundles/webestadisticas/fonts/SourceSansPro-Bold.otf'
+    'bundles/webestadisticas/fonts/SourceSansPro-Light.otf'
+    'bundles/webestadisticas/fonts/SourceSansPro-Regular.otf'
+    'bundles/webestadisticas/fonts/SourceSansPro-Black.otf'
+	%}{% endstylesheets %}
+	
+ {% endblock %}
+
+
+ {% block jss %}
+ 	{% javascripts 
+ 		'@WebEstadisticasBundle/Resources/public/js/jquery-1.11.1.min.js'
+ 		'@WebEstadisticasBundle/Resources/public/js/bootstrap.min.js'
+ 		'@WebEstadisticasBundle/Resources/public/plugins/jqueryui/jquery-ui.min.js'
+ 		'@WebEstadisticasBundle/Resources/public/js/layout.js'
+ 		'@WebEstadisticasBundle/Resources/public/js/jquery.center.js' output='js/main.js' %}
+  		<script src="{{ asset_url }}"></script>
+ 	{% endjavascripts %}
+ {% endblock %}
+</head> 
+ {% block titulo %}
+ 	<title>Poder Judicial de la Nación Argentina</title>
+ {% endblock %}
+ 
+ <body id=body>
+ <div id="wrapper">
+ <div id="content">
+  {% block head %}
+ <meta http-equiv="Content-Type" content="text/html">
+ <div class="titulo">
+ <br>
+	 <center>
+	 {% image '@WebEstadisticasBundle/Resources/public/images/escudo.PNG' %}
+    <img border=0 id="escudo" src="{{ asset_url }}" alt="Example"/>
+	{% endimage %}
+	 </center>
+ 	 <div id="pjn">Poder Judicial de la Nación</div>
+	 <div id="oe">Oficina de Estadísticas</div>
+</div>
+ {% endblock %}
+
+ {% block body %}
+ {% include "WebEstadisticasBundle::dialog.html.twig" %}
+ 
+	
+  
+
+ {% endblock %}
+  <script type="text/javascript">
+
+  {% block javascript %}
+ $( document ).ready(function() {
+	{% block layoutObject %}
+	var layoutObject = new Layout();
+	layoutObject.init();
+	layoutObject.anioUrl = "{{ path("_getanio") }}" ;
+	layoutObject.anioFallosUrl = "{{ path("_getanioFallos") }}";
+	layoutObject.CapitulosUrl = "{{ path("_getCapitulos") }}" ;
+	layoutObject.DivisionesUrl = "{{ path("_getDivisiones") }}";
+	layoutObject.DivJurisUrl = "{{ path("_getDivisionesJuris") }}";
+	layoutObject.ArchJurisUrl = "{{ path("_getArchivosJuris") }}";
+	layoutObject.ArchivosUrl= "{{ path("_getArchivos") }}";
+	layoutObject.getUrlDescarga= "{{ path("_getUrlDescarga") }}";
+	layoutObject.getJurisUrl = "{{ path("_getJurisdicciones") }}";
+	layoutObject.getAnioJurisdiccionesUrl ="{{ path("_getAnioJurisdicciones") }}";
+	layoutObject.ArchivosFallosUrl= '{{ path("_getArchivosFallos") }}';
+	layoutObject.getUrlDescargaFallos= "{{ path("_getUrlDescargaFallos") }}";
+	layoutObject.periodosUrl = "{{ path("_getPeriodos") }}";
+	layoutObject.archivosEvoUrl = "{{ path("_getArchivosEvo") }}";
+	layoutObject.indiCapUrl = "{{ path("_getCapitulosIndicadores") }}";
+	layoutObject.archivosIndicadoresUrl = "{{ path("_getArchivosIndicadores") }}";
+	layoutObject.getUrlDescargaIndicadores = "{{ path("_getUrlDescargaIndicadores") }}";
+	layoutObject.getUrlDescargaEvolucion = "{{ path("_getUrlDescargaEvolucion") }}";
+	layoutObject.SubtitulosUrl = "{{ path("_getSubtitulos") }}";
+                  layoutObject.SubtJurisUrl = "{{ path("_getSubtJuris") }}";
+	layoutObject.indiAnioUrl = "{{ path("_getAniosIndicadores") }}";
+
+
+	{% endblock %}	 
+ });
+
+
+ {% endblock %}
+
+
+
+ </script>
+ </div>
+ <div id="footer">
+ {% block footer %}
+	<div class="footerText">Enviar correo electrónico a <a href="mailto:secretaria.estadisticas@pjn.gov.ar">secretaria.estadisticas@pjn.gov.ar</a> con preguntas o comentarios sobre este sitio Web. 
+    <br>Derechos reservados: Poder Judicial de la Nación 2014. Última actualización: {{ fecha }}. </div>
+ {% endblock %}
+  </div>
+  </div>
+ </body>
+ 
+
+
+
+
+
+
+
+</html>

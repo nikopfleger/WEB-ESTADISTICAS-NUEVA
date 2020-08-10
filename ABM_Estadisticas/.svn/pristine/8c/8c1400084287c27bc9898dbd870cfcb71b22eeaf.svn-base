@@ -1,0 +1,4 @@
+abm:
+    resource: "@abmBundle/Controller/"
+    type:     annotation
+    prefix:   /

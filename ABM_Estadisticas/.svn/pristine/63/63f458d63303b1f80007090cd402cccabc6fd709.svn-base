@@ -1,0 +1,94 @@
+<?php
+
+namespace abmestadisticas\abmBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Anioxcap
+ *
+ * @ORM\Table()
+ * @ORM\Entity
+ */
+class Anioxcap
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="anca_id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $anca_id;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="anca_cap", type="integer")
+     */
+    private $anca_cap;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="anca_anio", type="integer")
+     */
+    private $anca_anio;
+
+
+    /**
+     * Get anca_id
+     *
+     * @return integer 
+     */
+    public function getAncaId()
+    {
+        return $this->anca_id;
+    }
+
+    /**
+     * Set anca_cap
+     *
+     * @param integer $ancaCap
+     * @return Anioxcap
+     */
+    public function setAncaCap($ancaCap)
+    {
+        $this->anca_cap = $ancaCap;
+
+        return $this;
+    }
+
+    /**
+     * Get anca_cap
+     *
+     * @return integer 
+     */
+    public function getAncaCap()
+    {
+        return $this->anca_cap;
+    }
+
+    /**
+     * Set anca_anio
+     *
+     * @param integer $ancaAnio
+     * @return Anioxcap
+     */
+    public function setAncaAnio($ancaAnio)
+    {
+        $this->anca_anio = $ancaAnio;
+
+        return $this;
+    }
+
+    /**
+     * Get anca_anio
+     *
+     * @return integer 
+     */
+    public function getAncaAnio()
+    {
+        return $this->anca_anio;
+    }
+}

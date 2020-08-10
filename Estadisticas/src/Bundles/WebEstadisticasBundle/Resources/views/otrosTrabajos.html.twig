@@ -1,0 +1,104 @@
+{% extends "WebEstadisticasBundle::layout.html.twig" %}
+{% block Settings %}{{ parent() }}{% endblock %}
+
+
+
+{% block css %}
+		{{ parent() }}
+	  {% stylesheets filter="cssrewrite"
+			'bundles/webestadisticas/css/otrosTrabajos.css'
+			'bundles/webestadisticas/plugins/DataTables-1.10.2/media/css/jquery.dataTables.min.css'
+			'bundles/webestadisticas/plugins/DataTables-1.10.2/media/css/jquery.dataTables_themeroller.css'
+			output='css/otrosTrabajos.css'	  
+	  %}
+	  <link rel="stylesheet" type="text/css" href=" {{ asset_url }}" />
+	  {% endstylesheets %}
+{% endblock %}
+
+{% block jss %}
+	{{ parent() }}
+	{% javascripts
+		'@WebEstadisticasBundle/Resources/public/js/otrosTrabajos.js'
+		'@WebEstadisticasBundle/Resources/public/plugins/DataTables-1.10.2/media/js/jquery.dataTables.min.js'
+		output='js/otros.js'
+	%}
+	<script src="{{ asset_url }}"></script>
+	{% endjavascripts %}
+{% endblock %}
+
+ {% block head %}
+
+ <div id='cssmenu'>
+	<ul>
+   		<li><a href='{{ path("index") }}'><span>Principal</span></a></li>
+   		<li><a href='{{ institucional }}' target="_blank"><span>Institucional</span></a></li>
+   		<li class='has-sub'><a href='javascript:void(0)'><span>Anuarios</span></a>
+     	<ul>
+        	 <li><a href='{{ path("_estad_mapa") }}' id='mapa'><span>Mapa</span></a></li>
+         	 <li><a href='javascript:void(0)' id='porano'><span>Por año</span></a></li>
+         	 <li><a href='javascript:void(0)' id='porfuerjuris'><span>Por fuero o jurisdicción</span></a>
+         	 <li class='last'><a href='javascript:void(0)' id='lugConsulta'><span>Lugares de consulta de los libros de estadísticas</span></a></li>
+        </ul>
+   		</li>
+   		<li class='has-sub active'><a href='javascript:void(0)'><span>Trabajos Especiales</span></a>
+   		<ul>
+   			<li><a href='javascript:void(0)' id='indicadoresMenu'><span>Indicadores</span></a></li>
+   			<li><a href='javascript:void(0)' id='evolucionMenu'><span>Evolución</span></a></li>
+   			<li><a href='javascript:void(0)' id='fallosMenu'><span>Fallos</span></a></li>
+   			<li class='last'><a href='{{ path("_otros_trabajos") }}' id='otrosTrabajosMenu'><span>Otros Trabajos</span></a>	  
+   		</ul>
+   		</li>
+   		<li class='last'><a href='javascript:void(0)' id='contact'><span>Contáctenos</span></a></li>
+	</ul>
+ </div>
+ 
+ {{ parent() }}
+	
+{% endblock %}
+
+{% block titulo %}
+	{{ parent() }}
+{% endblock %}
+
+{% block body %}
+{{ parent() }}
+<br>
+<h4 id="tesptit">Trabajos Especiales Realizados por la Oficina</h4>
+<div id="otrosTrabajosDiv">
+
+	<table id="otrosTrabajos" class="compact display">
+		<thead>
+		</thead>
+		<tbody>
+		</tbody>
+	</table>
+
+
+</div>
+
+ {% endblock %}
+ 
+ 
+ {% block javascript %}
+  	$(document).ready(function() {
+		
+ 
+ 		{% block layoutObject %}
+		{{ parent() }}
+		{% endblock %}
+ 		
+		
+		otrosObject = new Otros();
+ 		otrosObject.aaData = {{ aaData|raw }};
+ 		otrosObject.imagenDescarga = "{{ asset("bundles/webestadisticas/images/download.png") }}"
+ 		otrosObject.init();
+
+ 	 
+ 
+ 	 });
+ 	 
+ {% endblock %}
+ 
+  {% block footer %}
+	{{ parent() }}
+ {% endblock %}

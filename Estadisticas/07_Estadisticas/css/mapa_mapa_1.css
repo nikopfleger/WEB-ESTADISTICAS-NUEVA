@@ -1,0 +1,68 @@
+html, body {
+    width: 100%;
+    height: 100%;
+}
+
+#map_canvas {
+	height: 40%;
+}
+
+table, tbody, {
+    height: 100%;
+    width: 100%;
+}
+th {
+    height: 100%;
+    width: 50%;
+}
+/*para cuando este desarrollado google maps*/
+/* #map_canvas {
+	height: 480px;
+	width: 705px;
+	border-width:2px;
+	border-color:#1b9bff;
+	border-style:solid;
+	margin-right: 10px;
+	margin-left: 5px;
+} */
+
+#seleccionMapa {
+	padding: 10px 3px;
+
+}
+
+#Jurisdicciones {
+	width: 70%;
+}
+
+#formMapa {
+	font-size: 12px;
+	padding: 10px 15px 5px 5px;
+	overflow-y:scroll;
+	height: 200px;
+	border-top-width: 1px;
+	border-top-color:#1b9bff;
+	border-top-style:solid;
+	margin-top:5px;
+}
+
+.selects {
+	width: 60%;
+	padding: 0px 15px;
+}
+
+tooltipDiv {
+	width: 500px;
+}
+
+.textAreaMap {
+  height: 150px;
+  max-height: 150px;
+  width: 600px;
+  resize: none;
+}
+
+#argMap {
+	width:365;
+	height:500;
+}

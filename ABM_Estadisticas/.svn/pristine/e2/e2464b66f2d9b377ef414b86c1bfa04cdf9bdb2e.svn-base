@@ -1,0 +1,61 @@
+<?php
+
+use Symfony\Component\Routing\Exception\MethodNotAllowedException;
+use Symfony\Component\Routing\Exception\ResourceNotFoundException;
+use Symfony\Component\Routing\RequestContext;
+
+/**
+ * appProdUrlMatcher
+ *
+ * This class has been auto-generated
+ * by the Symfony Routing Component.
+ */
+class appProdUrlMatcher extends Symfony\Bundle\FrameworkBundle\Routing\RedirectableUrlMatcher
+{
+    /**
+     * Constructor.
+     */
+    public function __construct(RequestContext $context)
+    {
+        $this->context = $context;
+    }
+
+    public function match($pathinfo)
+    {
+        $allow = array();
+        $pathinfo = rawurldecode($pathinfo);
+        $context = $this->context;
+        $request = $this->request;
+
+        // abmestadisticas_abm_admin_index
+        if (rtrim($pathinfo, '/') === '') {
+            if (substr($pathinfo, -1) !== '/') {
+                return $this->redirect($pathinfo.'/', 'abmestadisticas_abm_admin_index');
+            }
+
+            return array (  '_controller' => 'abmestadisticas\\abmBundle\\Controller\\AdminController::indexAction',  '_route' => 'abmestadisticas_abm_admin_index',);
+        }
+
+        // _admin
+        if ($pathinfo === '/admin') {
+            return array (  '_controller' => 'abmestadisticas\\abmBundle\\Controller\\AdminController::adminAction',  '_route' => '_admin',);
+        }
+
+        // _getTablaAnio
+        if ($pathinfo === '/getTablaAnio') {
+            return array (  '_controller' => 'abmestadisticas\\abmBundle\\Controller\\AdminController::getTablaAnioAction',  '_route' => '_getTablaAnio',);
+        }
+
+        // _habilitacionAnio
+        if ($pathinfo === '/habilitacionAnio') {
+            return array (  '_controller' => 'abmestadisticas\\abmBundle\\Controller\\AdminController::habilitacionAnioAction',  '_route' => '_habilitacionAnio',);
+        }
+
+        // _eliminarAnio
+        if ($pathinfo === '/eliminarAnio') {
+            return array (  '_controller' => 'abmestadisticas\\abmBundle\\Controller\\AdminController::eliminarAnioAction',  '_route' => '_eliminarAnio',);
+        }
+
+        throw 0 < count($allow) ? new MethodNotAllowedException(array_unique($allow)) : new ResourceNotFoundException();
+    }
+}

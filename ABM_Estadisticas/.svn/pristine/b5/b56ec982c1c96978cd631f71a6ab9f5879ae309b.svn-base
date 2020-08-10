@@ -1,0 +1,31 @@
+<?php
+
+/* TwigBundle:Exception:error.atom.twig */
+class __TwigTemplate_496a3602f279a635b1e68a1496062c58ac5fdfa38cc8e8f0b2b71a7ada290bf8 extends Twig_Template
+{
+    public function __construct(Twig_Environment $env)
+    {
+        parent::__construct($env);
+
+        $this->parent = false;
+
+        $this->blocks = array(
+        );
+    }
+
+    protected function doDisplay(array $context, array $blocks = array())
+    {
+        // line 1
+        $this->env->loadTemplate("TwigBundle:Exception:error.xml.twig")->display($context);
+    }
+
+    public function getTemplateName()
+    {
+        return "TwigBundle:Exception:error.atom.twig";
+    }
+
+    public function getDebugInfo()
+    {
+        return array (  19 => 1,);
+    }
+}

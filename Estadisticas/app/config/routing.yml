@@ -1,0 +1,4 @@
+web_estadisticas:
+    resource: "@WebEstadisticasBundle/Controller/"
+    type:     annotation
+    prefix:   /

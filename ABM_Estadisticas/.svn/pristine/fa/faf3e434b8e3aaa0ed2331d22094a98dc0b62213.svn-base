@@ -1,0 +1,79 @@
+<?php
+
+namespace abmestadisticas\abmBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Titulo
+ *
+ * @ORM\Table()
+ * @ORM\Entity
+ */
+class Titulo
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="titu_id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $titu_id;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="titu_detalle", type="string", length=255)
+     */
+    private $titu_detalle;
+
+
+
+    /**
+     * Get titu_id
+     *
+     * @return integer 
+     */
+    public function getTituId()
+    {
+        return $this->titu_id;
+    }
+
+ 
+    /**
+     * Set titu_detalle
+     *
+     * @param string $tituDetalle
+     * @return Titulo
+     */
+    public function setTituDetalle($tituDetalle)
+    {
+        $this->titu_detalle = $tituDetalle;
+
+        return $this;
+    }
+
+    /**
+     * Get titu_detalle
+     *
+     * @return string 
+     */
+    public function getTituDetalle()
+    {
+        return $this->titu_detalle;
+    }
+    
+    /**
+     * Set titu_id
+     *
+     * @param integer $titu_id
+     * @return Titulo
+     */
+    public function setTituId($tituId)
+    {
+    	$this->titu_id = $tituId;
+    
+    	return $this;
+    }
+}

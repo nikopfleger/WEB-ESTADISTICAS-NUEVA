@@ -1,0 +1,28 @@
+.Msonormal {
+	text-align:justify;
+	line-height:150%;
+	font-family:Source Sans Bold Italic;
+	font-style:italic;
+}
+.Msonormal3 {
+	text-align:justify;
+	line-height:150%;
+	text-indent:25pt;
+	margin-left:15px;
+	font-family:Source Sans Regular;
+}
+
+.Msonormal2 {
+	text-align:justify;
+	line-height:150%;
+	text-indent:25pt;
+	margin-left:40px;
+	font-family:Source Sans Regular;
+}
+
+#texto {
+	overflow-y:scroll;
+	max-height: 455px;
+	background-color: rgba(122, 185, 235, 0.61);
+	margin-top: 5px;
+}

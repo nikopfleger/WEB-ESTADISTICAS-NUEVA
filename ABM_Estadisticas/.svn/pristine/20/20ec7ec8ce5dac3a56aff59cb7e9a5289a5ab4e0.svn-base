@@ -1,0 +1,165 @@
+<?php
+
+/* abmBundle::layout.html.twig */
+class __TwigTemplate_fd24c361094158db4d3c92e3b5e721034538b38f45b1e9232ff145ed867453bc extends Twig_Template
+{
+    public function __construct(Twig_Environment $env)
+    {
+        parent::__construct($env);
+
+        $this->parent = false;
+
+        $this->blocks = array(
+            'css' => array($this, 'block_css'),
+            'jss' => array($this, 'block_jss'),
+            'body' => array($this, 'block_body'),
+            'javascript' => array($this, 'block_javascript'),
+        );
+    }
+
+    protected function doDisplay(array $context, array $blocks = array())
+    {
+        // line 1
+        echo "<!DOCTYPE html>
+<html>
+
+
+<head>
+";
+        // line 6
+        $this->displayBlock('css', $context, $blocks);
+        // line 23
+        echo "
+";
+        // line 24
+        $this->displayBlock('jss', $context, $blocks);
+        // line 32
+        echo "
+</head>
+
+<title>ABM Estadísticas</title>
+
+<body> 
+<meta http-equiv=\"Content-Type\" content=\"text/html\">
+
+";
+        // line 40
+        $this->displayBlock('body', $context, $blocks);
+        // line 44
+        echo "
+
+  
+\t";
+        // line 47
+        $this->displayBlock('javascript', $context, $blocks);
+        // line 50
+        echo "
+  
+
+</body>
+
+</html>
+";
+    }
+
+    // line 6
+    public function block_css($context, array $blocks = array())
+    {
+        // line 7
+        echo "\t";
+        if (isset($context['assetic']['debug']) && $context['assetic']['debug']) {
+            // asset "536aaf2_0"
+            $context["asset_url"] = isset($context['assetic']['use_controller']) && $context['assetic']['use_controller'] ? $this->env->getExtension('routing')->getPath("_assetic_536aaf2_0") : $this->env->getExtension('assets')->getAssetUrl("_controller/css/layout_bootstrap_1.css");
+            // line 11
+            echo "\t<link rel=\"stylesheet\" href=\"";
+            echo twig_escape_filter($this->env, (isset($context["asset_url"]) ? $context["asset_url"] : $this->getContext($context, "asset_url")), "html", null, true);
+            echo "\" />
+  \t";
+        } else {
+            // asset "536aaf2"
+            $context["asset_url"] = isset($context['assetic']['use_controller']) && $context['assetic']['use_controller'] ? $this->env->getExtension('routing')->getPath("_assetic_536aaf2") : $this->env->getExtension('assets')->getAssetUrl("_controller/css/layout.css");
+            echo "\t<link rel=\"stylesheet\" href=\"";
+            echo twig_escape_filter($this->env, (isset($context["asset_url"]) ? $context["asset_url"] : $this->getContext($context, "asset_url")), "html", null, true);
+            echo "\" />
+  \t";
+        }
+        unset($context["asset_url"]);
+        // line 13
+        echo "  \t
+  \t";
+        // line 14
+        if (isset($context['assetic']['debug']) && $context['assetic']['debug']) {
+            // asset "41075a7_0"
+            $context["asset_url"] = isset($context['assetic']['use_controller']) && $context['assetic']['use_controller'] ? $this->env->getExtension('routing')->getPath("_assetic_41075a7_0") : $this->env->getExtension('assets')->getAssetUrl("_controller/css/41075a7_glyphicons-halflings-regular_1.css");
+            // asset "41075a7_1"
+            $context["asset_url"] = isset($context['assetic']['use_controller']) && $context['assetic']['use_controller'] ? $this->env->getExtension('routing')->getPath("_assetic_41075a7_1") : $this->env->getExtension('assets')->getAssetUrl("_controller/css/41075a7_SourceSansPro-Bold_2.css");
+            // asset "41075a7_2"
+            $context["asset_url"] = isset($context['assetic']['use_controller']) && $context['assetic']['use_controller'] ? $this->env->getExtension('routing')->getPath("_assetic_41075a7_2") : $this->env->getExtension('assets')->getAssetUrl("_controller/css/41075a7_SourceSansPro-Light_3.css");
+            // asset "41075a7_3"
+            $context["asset_url"] = isset($context['assetic']['use_controller']) && $context['assetic']['use_controller'] ? $this->env->getExtension('routing')->getPath("_assetic_41075a7_3") : $this->env->getExtension('assets')->getAssetUrl("_controller/css/41075a7_SourceSansPro-Regular_4.css");
+            // asset "41075a7_4"
+            $context["asset_url"] = isset($context['assetic']['use_controller']) && $context['assetic']['use_controller'] ? $this->env->getExtension('routing')->getPath("_assetic_41075a7_4") : $this->env->getExtension('assets')->getAssetUrl("_controller/css/41075a7_SourceSansPro-Black_5.css");
+        } else {
+            // asset "41075a7"
+            $context["asset_url"] = isset($context['assetic']['use_controller']) && $context['assetic']['use_controller'] ? $this->env->getExtension('routing')->getPath("_assetic_41075a7") : $this->env->getExtension('assets')->getAssetUrl("_controller/css/41075a7.css");
+        }
+        unset($context["asset_url"]);
+    }
+
+    // line 24
+    public function block_jss($context, array $blocks = array())
+    {
+        // line 25
+        echo "\t";
+        if (isset($context['assetic']['debug']) && $context['assetic']['debug']) {
+            // asset "046b614_0"
+            $context["asset_url"] = isset($context['assetic']['use_controller']) && $context['assetic']['use_controller'] ? $this->env->getExtension('routing')->getPath("_assetic_046b614_0") : $this->env->getExtension('assets')->getAssetUrl("_controller/js/layout_jquery-1.11.2.min_1.js");
+            // line 29
+            echo "  \t\t<script src=\"";
+            echo twig_escape_filter($this->env, (isset($context["asset_url"]) ? $context["asset_url"] : $this->getContext($context, "asset_url")), "html", null, true);
+            echo "\"></script>
+ \t";
+            // asset "046b614_1"
+            $context["asset_url"] = isset($context['assetic']['use_controller']) && $context['assetic']['use_controller'] ? $this->env->getExtension('routing')->getPath("_assetic_046b614_1") : $this->env->getExtension('assets')->getAssetUrl("_controller/js/layout_bootstrap_2.js");
+            echo "  \t\t<script src=\"";
+            echo twig_escape_filter($this->env, (isset($context["asset_url"]) ? $context["asset_url"] : $this->getContext($context, "asset_url")), "html", null, true);
+            echo "\"></script>
+ \t";
+        } else {
+            // asset "046b614"
+            $context["asset_url"] = isset($context['assetic']['use_controller']) && $context['assetic']['use_controller'] ? $this->env->getExtension('routing')->getPath("_assetic_046b614") : $this->env->getExtension('assets')->getAssetUrl("_controller/js/layout.js");
+            echo "  \t\t<script src=\"";
+            echo twig_escape_filter($this->env, (isset($context["asset_url"]) ? $context["asset_url"] : $this->getContext($context, "asset_url")), "html", null, true);
+            echo "\"></script>
+ \t";
+        }
+        unset($context["asset_url"]);
+    }
+
+    // line 40
+    public function block_body($context, array $blocks = array())
+    {
+        // line 41
+        echo "
+
+";
+    }
+
+    // line 47
+    public function block_javascript($context, array $blocks = array())
+    {
+        // line 48
+        echo "
+\t";
+    }
+
+    public function getTemplateName()
+    {
+        return "abmBundle::layout.html.twig";
+    }
+
+    public function getDebugInfo()
+    {
+        return array (  152 => 48,  149 => 47,  143 => 41,  140 => 40,  118 => 29,  113 => 25,  110 => 24,  91 => 14,  88 => 13,  74 => 11,  69 => 7,  66 => 6,  56 => 50,  54 => 47,  49 => 44,  47 => 40,  37 => 32,  35 => 24,  32 => 23,  30 => 6,  23 => 1,);
+    }
+}

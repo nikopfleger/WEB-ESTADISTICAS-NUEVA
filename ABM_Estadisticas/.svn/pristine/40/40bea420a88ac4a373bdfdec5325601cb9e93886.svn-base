@@ -1,0 +1,751 @@
+{% extends "abmBundle::layout.html.twig" %}
+
+{% block css %}
+		{{ parent() }}
+		{% stylesheets filter='cssrewrite'
+			'bundles/abm/css/admin.css'
+			'bundles/abm/css/fontAwesomeDatatablesIntegration.css'
+			'bundles/abm/datatables/media/css/jquery.dataTables.css'
+			'bundles/abm/datatables/media/css/jquery.dataTables_themeroller.css'
+			'bundles/abm/fontAwesome/css/font-awesome.min.css'
+			'bundles/abm/jqueryui/jquery-ui.css'
+			'bundles/abm/jqueryUI/jquery-ui.structure.css'
+ 			'bundles/abm/jqueryUI/jquery-ui.theme.css'
+
+		
+		output='css/admin.css' %}
+			<link rel="stylesheet" type="text/css" href=" {{ asset_url }}" />
+		{% endstylesheets %}
+	
+{% endblock %}
+
+{% block jss %}
+	{{ parent() }}
+	{% javascripts
+	 	'@abmBundle/Resources/public/jqueryui/jquery-ui.js'
+	 	'@abmBundle/Resources/public/datatables/media/js/jquery.dataTables.min.js'
+	 	'@abmBundle/Resources/public/js/jquery.center.js'
+		'@abmBundle/Resources/public/js/admin.js'
+		output='js/admin.js'
+	%}
+	<script src="{{ asset_url }}"></script>
+	{% endjavascripts %}
+{% endblock %}
+
+{% block body %}	
+	{{ parent() }}
+	
+	
+	
+<div class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+        
+        {# TITULO #}
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="javascript:void(0)">ABM Estadísticas</a>
+        </div>
+        
+        
+        <div class="collapse navbar-collapse">
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="http://5.35.1.157:8080/" target="_blank">Poder Judicial de la Nación</a></li>
+            </ul>
+            <ul class="nav navbar-nav">
+               <li>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Tablas Página Web<b class="caret"></b></a>
+                    <ul class="dropdown-menu multi-level">
+                        {#separar links#}
+                       {# <li class="divider"></li> 
+                        <li><a href="#">Separated link</a></li> #}
+                        {#separar links#}
+                        <li class="dropdown-submenu">
+                            <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown">Tabla Archivos Estadísticos</a>
+                           	
+                            <ul class="dropdown-menu">
+                            	
+                                <li><a href="javascript:void(0)" id="tablaAres">Mostrar Tabla</a></li>                                
+                                <li><a href="javascript:void(0)" id="aresAgregar">Agregar Archivos</a></li>
+                            </ul>
+                        </li>
+                        
+                        <li class="dropdown-submenu">
+                            <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown">Tabla Año</a>
+                           	
+                            <ul class="dropdown-menu">
+                            	
+                                <li><a href="javascript:void(0)" id="tablaAnio">Mostrar Tabla</a></li>                                
+                                <li><a href="javascript:void(0)" id="agregarAnio">Agregar Año</a></li>
+                            </ul>
+                        </li>
+                        <li class="dropdown-submenu">  
+                            <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown">Tabla Capítulo</a>   
+                                                     
+                            <ul class="dropdown-menu">
+                                <li><a href="javascript:void(0)" id="tablaCapitulo">Mostrar Tabla</a></li>
+                                <li><a href="javascript:void(0)" id="agregarCapitulo">Agregar Capítulo</a></li>
+                            </ul>                            
+                        </li>
+                        
+                        <li class="dropdown-submenu">
+                        	<a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown">Tabla Jurisdicción</a>
+                       		<ul class="dropdown-menu">
+                                <li><a href="javascript:void(0)" id="tablaJurisdiccion">Mostrar Tabla</a></li>
+                                <li><a href="javascript:void(0)" id="agregarJurisdiccion">Agregar Jurisdicción</a></li>
+                            </ul> 
+                        
+                        </li>
+                        
+                        <li class="dropdown-submenu">
+                        	<a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown">Tabla Título</a>
+                       		<ul class="dropdown-menu">
+                                <li><a href="javascript:void(0)" id="tablaTitulo">Mostrar Tabla</a></li>
+                                <li><a href="javascript:void(0)" id="agregarTitulo">Agregar Título</a></li>
+                            </ul> 
+                        
+                        </li>
+                        
+                        <li class="dropdown-submenu">
+                        	<a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown">Tabla Subtítulo</a>
+                       		<ul class="dropdown-menu">
+                                <li><a href="javascript:void(0)" id="tablaSubtitulo">Mostrar Tabla</a></li>
+                                <li><a href="javascript:void(0)" id="agregarSubtitulo">Agregar Subtítulo</a></li>
+                            </ul> 
+                        
+                        </li>
+                        
+                        <li class="dropdown-submenu">
+                        	<a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown">Tabla Capitulo Indicador</a>
+                       		<ul class="dropdown-menu">
+                                <li><a href="javascript:void(0)" id="tablaCapiInd">Mostrar Tabla</a></li>
+                                <li><a href="javascript:void(0)" id="agregarCapiInd">Agregar Capitulo</a></li>
+                            </ul> 
+                        
+                        </li>
+                        
+                        <li class="dropdown-submenu">
+                        	<a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown">Tabla Indicador</a>
+                       		<ul class="dropdown-menu">
+                                <li><a href="javascript:void(0)" id="tablaInd">Mostrar Tabla</a></li>
+                                <li><a href="javascript:void(0)" id="agregarIndi">Agregar Archivo</a></li>
+                            </ul> 
+                        
+                        </li>
+                        
+                    </ul>
+                </li>                
+            </ul>
+        </div><!--/.nav-collapse -->
+    </div>
+</div>
+	
+
+	
+{# 	<div id='cssmenu'>#}
+    	
+{#              		   <li class="dropdown" class="dropdown" class="dropdown" class="dropdown" class="dropdown" class="dropdown" class="dropdown" class="dropdown" class="dropdown" class="dropdown" class="dropdown" class="dropdown" class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Base de Datos de Página Web <b class="caret"></b></a>#}
+{#                 		    <ul class="dropdown-menu" role="menu">#}
+{#                    		    	<li><a href="#">Tabla Jurisdiccion</a></li>#}
+{#                     		    <li><a href="#">Tabla de Títulos</a></li>#}
+{#                     		    <li><a href="#">Tabla de Subtítulos</a></li>#}
+{#                      		    <li><a href="#">Tabla Indicadores</a></li>#}
+{#                        		    <li><a href="#">Tabla de Capítulos de Indicadores</a></li>#}
+{#                      		    <li><a href="#">Tabla Periodos</a></li>#}
+{#                      			<li><a href="#">Tabla Evolución</a></li>#}
+{#               			        <li><a href="#">Tabla Novedades</a></li>#}
+{#                   			    <li><a href="#">Tabla de Trabajos Especiales</a></li>#}
+{#                   			 </ul>#}
+{#             		  </li>#}
+{#                	  <li><a href="#">Base de Datos General</a></li>#}
+{#           	 </ul>#}
+{#     		</div>#}
+{#    		</div>#}
+{#  	</div>#}
+
+<div id="body"><br>
+	<div id="info"  class="center">Haga clic en el menu de navegación para comenzar</div>
+	
+	<div id="progressbar" class="progress progress-striped active">
+    	<div class="progress-bar" style="width:100%">Cargando</div>
+    </div>
+	
+
+	<table id="datatable" class="compact display"><thead></thead><tbody></tbody></table>
+</div>
+	
+{#other dialogs #}
+	
+<div id="ALERTA" title="Alerta">
+	<input type='hidden' id='alertaTabla' value=''>
+	<div id='alertaMensaje'></div>
+	<div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
+		<div class="ui-dialog-buttonset">
+				<a id='alertaAceptar' class="btn ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only">
+   					<span class="ui-button-text">Si</span></a>
+   				<a id='alertaCancelar' class="btn ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only">
+   					<span class="ui-button-text">No</span></a>
+   		</div>
+   	</div>
+</div>
+	
+	
+	{# FORMS  #}
+
+	
+	
+ {% block forms %}
+ 
+ {#INDICADOR#}
+ 
+ {% form_theme editarINDI _self %}
+ 
+  <div id="editarIndiDLG" title="Indicador">
+ 
+ {{ form_start(editarINDI) }}
+ {{ form_errors(editarINDI) }} 
+ 
+  <div class='form-group'>
+  			 {{ form_label(editarINDI.indiAnio) }}
+  			 <div {{ block('widget_container_attributes') }} class="col-sm-10" >
+    		 	{{ form_widget(editarINDI.indiAnio, {'attr': {'class':'form-control ui-selectmenu-button ui-widget ui-state-default ui-corner-all'} }) }}
+    		 </div>
+    </div>
+     
+     <div class='form-group'>
+     		{{ form_label(editarINDI.indiCapitulo) }}
+     		<div {{ block('widget_container_attributes') }} class="col-sm-10">
+     			{{ form_widget(editarINDI.indiCapitulo, {'attr': {'class':'form-control ui-selectmenu-button ui-widget ui-state-default ui-corner-all'} })  }}
+     		</div>     
+     </div>
+ 
+
+ <div class='form-group'>
+ 	{{ form_label(editarINDI.indiDetalle) }}
+ 	<div {{ block('widget_container_attributes') }} class="col-sm-10" >
+ 	{{ form_widget(editarINDI.indiDetalle,{'attr': {'class':'form-control '} }) }}
+ 	</div>
+ </div>
+ 
+  <div class='form-group'>
+ 	{{ form_label(editarINDI.indiLink) }}
+ 	<div {{ block('widget_container_attributes') }} class="col-sm-10" >
+ 	{{ form_widget(editarINDI.indiLink,{'attr': {'class':'form-control '} }) }}
+ 	</div>
+ </div>
+ 
+  <div class='form-group'>
+ 	{{ form_label(editarINDI.indiDescarga) }}
+ 	<div {{ block('widget_container_attributes') }} class="col-sm-10" >
+ 	{{ form_widget(editarINDI.indiDescarga,{'attr': {'class':'form-control '} }) }}
+ 	</div>
+ </div>
+ 
+  {{ form_widget(editarINDI.indiId) }}
+  {{ form_widget(editarINDI.indiEditar) }}
+ 
+
+ 
+  {%- block submit_widget_indi -%}
+    <br>
+		<div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
+			<div class="ui-dialog-buttonset">
+    			<button type="{{ type|default('submit') }}" class="editarINDI btn ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only"  }}>
+     	  		 <span class="ui-button-text">Confirmar</span>
+ 	   			</button>
+ 	   			
+ 	   			<button id="eliminarIndi" class="btn ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only"  }}>
+     	  		 <span class="ui-button-text">Eliminar</span>
+ 	   			</button>
+ 	   			
+ 	   			
+ 	   			<button class="cancelarBoton btn ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only"  }}>
+     	  		 <span class="ui-button-text">Cancelar</span>
+ 	   			</button>
+ 	   		</div>
+ 	   	</div>
+  {%- endblock -%}
+ 	{{ form_end(editarINDI) }}
+ </div>
+ 
+ 
+ {#CAPITULO INDICADOR#}
+ 
+ {% form_theme editarCI _self %}
+ 
+  <div id="editarCainDLG" title="Capítulo Indicador">
+ 
+ {{ form_start(editarCI) }}
+ {{ form_errors(editarCI) }} 
+
+ <div class='form-group'>
+ 	{{ form_label(editarCI.cainDetalle) }}
+ 	<div {{ block('widget_container_attributes') }} class="col-sm-10" >
+ 	{{ form_widget(editarCI.cainDetalle,{'attr': {'class':'form-control '} }) }}
+ 	</div>
+ </div>
+ 
+  {{ form_widget(editarCI.cainId) }}
+  {{ form_widget(editarCI.cainEditar) }}
+ 
+
+ 
+  {%- block submit_widget_cain -%}
+    <br>
+		<div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
+			<div class="ui-dialog-buttonset">
+    			<button type="{{ type|default('submit') }}" class="editarCI btn ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only"  }}>
+     	  		 <span class="ui-button-text">Confirmar</span>
+ 	   			</button>
+ 	   			
+ 	   			<button id="eliminarCain" class="btn ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only"  }}>
+     	  		 <span class="ui-button-text">Eliminar</span>
+ 	   			</button>
+ 	   			
+ 	   			
+ 	   			<button class="cancelarBoton btn ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only"  }}>
+     	  		 <span class="ui-button-text">Cancelar</span>
+ 	   			</button>
+ 	   		</div>
+ 	   	</div>
+  {%- endblock -%}
+ 	{{ form_end(editarCI) }}
+ </div>
+ 
+ 
+ {#ARES#} 
+ {% form_theme editarAres _self %}
+ 
+
+
+ <div id="editarAresDLG" title="Archivos">
+ 	{{ form_start(editarAres) }}
+ 	{{ form_errors(editarAres) }}
+ 	
+ 	<div class='form-group'>
+ 		{{ form_label(editarAres.aresDetalle) }}
+ 		<div {{ block('widget_container_attributes') }} class="col-sm-10" >
+ 		{{ form_widget(editarAres.aresDetalle,{'attr': {'class':'form-control '} }) }}
+ 		</div>
+ 	</div>
+ 	
+    <div class='form-group'>
+  			 {{ form_label(editarAres.aresAnio) }}
+  			 <div {{ block('widget_container_attributes') }} class="col-sm-7" >
+    		 	{{ form_widget(editarAres.aresAnio, {'attr': {'class':'form-control ui-selectmenu-button ui-widget ui-state-default ui-corner-all'} }) }}
+    		 </div>
+    </div>
+     
+     <div class='form-group'>
+     		{{ form_label(editarAres.aresCapitulo) }}
+     		<div {{ block('widget_container_attributes') }} class="col-sm-7">
+     			{{ form_widget(editarAres.aresCapitulo, {'attr': {'class':'form-control ui-selectmenu-button ui-widget ui-state-default ui-corner-all'} })  }}
+     		</div>     
+     </div>
+     
+     <div class='form-group'>
+     		{{ form_label(editarAres.aresTitulo) }}
+     		<div {{ block('widget_container_attributes') }} class="col-sm-7" >
+     		{{ form_widget(editarAres.aresTitulo, {'attr': {'class':'form-control ui-selectmenu-button ui-widget ui-state-default ui-corner-all'} }) }}
+     		</div>
+     </div>
+ 
+ 	 <div class='form-group'>
+     		{{ form_label(editarAres.aresSubtitulo) }}
+     		<div {{ block('widget_container_attributes') }} class="col-sm-7" >
+     		{{ form_widget(editarAres.aresSubtitulo, {'attr': {'class':'form-control ui-selectmenu-button ui-widget ui-state-default ui-corner-all'} }) }}
+     		</div>
+     </div>
+     
+    <div class='form-group'>
+ 		{{ form_label(editarAres.aresLink) }}
+ 		<div {{ block('widget_container_attributes') }} class="col-sm-10" >
+ 		{{ form_widget(editarAres.aresLink,{'attr': {'class':'form-control '} }) }}
+ 		</div>
+ 	</div>
+ 	
+ 	 	<div class='form-group'>
+ 		{{ form_label(editarAres.aresDescarga) }}
+ 		<div {{ block('widget_container_attributes') }} class="col-sm-10" >
+ 		{{ form_widget(editarAres.aresDescarga,{'attr': {'class':'form-control '} }) }}
+ 		</div>
+ 	</div>
+ 	
+ 	 	<div class='form-group'>
+ 		{{ form_label(editarAres.aresDescripcion) }}
+ 		<div {{ block('widget_container_attributes') }} class="col-sm-10" >
+ 		{{ form_widget(editarAres.aresDescripcion,{'attr': {'class':'form-control '} }) }}
+ 		</div>
+ 	</div>
+ 	
+ 	 	<div class='form-group'>
+ 		{{ form_label(editarAres.aresComentario) }}
+ 		<div {{ block('widget_container_attributes') }} class="col-sm-10" >
+ 		{{ form_widget(editarAres.aresComentario,{'attr': {'class':'form-control '} }) }}
+ 		</div>
+ 	</div>
+   {{ form_widget(editarAres.aresId) }}
+   {{ form_widget(editarAres.aresEditar) }}
+ 
+ 	{%- block submit_widget_ares -%}
+		<div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
+			<div class="ui-dialog-buttonset">
+    			<button type="{{ type|default('submit') }}" class="editarAres btn ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only"  }}>
+     	  		 <span class="ui-button-text">Confirmar</span>
+ 	   			</button>
+ 	   			
+ 	   			<button id="eliminarAres" class="btn ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only"  }}>
+     	  		 <span class="ui-button-text">Eliminar</span>
+ 	   			</button>
+ 	   			
+ 	   			
+ 	   			<button class="cancelarBoton btn ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only"  }}>
+     	  		 <span class="ui-button-text">Cancelar</span>
+ 	   			</button>
+ 	   		</div>
+ 	   	</div>
+  {%- endblock -%}
+ 	{{ form_end(editarAres) }}
+ 
+ 
+ 
+ </div>
+ 
+ 
+
+ 
+  {#AÑO#}
+ <div id="agregarAnioDLG" title="Agregar Año">
+ 	{{ form_start(agregarAnio) }}
+    {{ form_errors(agregarAnio) }}
+
+   
+  <div class='form-group'>
+  			 {{ form_label(agregarAnio.anioId) }}
+  			 <div {{ block('widget_container_attributes') }} class="col-sm-7" >
+    		 	{{ form_widget(agregarAnio.anioId, {'attr': {'class':'form-control ui-selectmenu-button ui-widget ui-state-default ui-corner-all'} }) }}
+    		 </div>
+  </div>
+
+  <div class='form-group'>
+  			{{ form_label(agregarAnio.anioHabilitado) }}
+  		<div {{ block('widget_container_attributes') }} class="col-sm-7">
+				{% for child in agregarAnio.anioHabilitado %}
+  				{{ form_label(child) }}
+  				{{ form_widget(child, {'attr': {'name': 'inlineRadioOptions', 'id': 'inlineRadio' ~ loop.index }}) }}
+  				
+  			{% endfor %}
+  		</div>
+  </div>
+
+
+  <div class='form-group'>
+	<div {{ block('widget_container_attributes') }} class="col-sm-7">
+		  {% for child in agregarAnio.anioOpciones %}
+		     {{ form_widget(child) }}
+			 {{ form_label(child) }}
+		 	 
+		  {% endfor %}
+    </div>
+  </div>
+    
+    
+    {%- block submit_widget -%}
+    <br>
+		<div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
+			<div class="ui-dialog-buttonset">
+    			<button type="{{ type|default('submit') }}" class="btn ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only"  }}>
+     	  		 <span class="ui-button-text">Confirmar</span>
+ 	   			</button>
+ 	   			<button class="cancelarBoton btn ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only"  }}>
+     	  		 <span class="ui-button-text">Cancelar</span>
+ 	   			</button>
+ 	   		</div>
+ 	   	</div>
+	{%- endblock submit_widget -%}
+    
+    
+ 
+    	 
+    
+    {{ form_end(agregarAnio) }}
+ </div>
+
+ 
+ 
+  {#
+ CAPITULO #}
+ 
+ {% form_theme editarCapitulo _self %}
+ 
+ <div id="editarCapituloDLG" title="Capítulos">
+ 
+ {{ form_start(editarCapitulo) }}
+ {{ form_errors(editarCapitulo) }} 
+ <div class='form-group'>
+ 	{{ form_label(editarCapitulo.capi_id) }}
+ 	<div {{ block('widget_container_attributes') }} class="col-sm-3" >
+ 	{{ form_widget(editarCapitulo.capi_id,{'attr': {'class':'form-control '} }) }}
+ 	</div>
+ </div>
+ 
+ <div class='form-group'>
+ 	{{ form_label(editarCapitulo.capi_detalle) }}
+ 	<div {{ block('widget_container_attributes') }} class="col-sm-10" >
+ 	{{ form_widget(editarCapitulo.capi_detalle,{'attr': {'class':'form-control '} }) }}
+ 	</div>
+ </div>
+ 
+ {{ form_widget(editarCapitulo.capi_editar) }}
+ 
+  {%- block submit_widget_capit -%}
+    <br>
+		<div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
+			<div class="ui-dialog-buttonset">
+    			<button type="{{ type|default('submit') }}" class="editarCapitulo btn ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only"  }}>
+     	  		 <span class="ui-button-text">Confirmar</span>
+ 	   			</button>
+ 	   			
+ 	   			<button id="eliminarCapitulo" class="btn ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only"  }}>
+     	  		 <span class="ui-button-text">Eliminar</span>
+ 	   			</button>
+ 	   			
+ 	   			
+ 	   			<button class="cancelarBoton btn ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only"  }}>
+     	  		 <span class="ui-button-text">Cancelar</span>
+ 	   			</button>
+ 	   		</div>
+ 	   	</div>
+  {%- endblock submit_widget_capit -%}
+ 	{{ form_end(editarCapitulo) }}
+ </div>
+ 
+ 
+ {# JURISDICCION #}
+ 
+  {% form_theme editarJurisdiccion _self %}
+  <div id="editarJurisdiccionDLG" title="Jurisdicciónes">
+  
+  	{{ form_start(editarJurisdiccion) }}
+  	{{ form_errors(editarJurisdiccion) }}
+  	
+  	<div class='form-group'>
+  		{{ form_label(editarJurisdiccion.juriDetalle) }}
+  		<div {{ block('widget_container_attributes') }} class="col-sm-9">
+  			{{ form_widget(editarJurisdiccion.juriDetalle,{'attr': {'class':'form-control'}}) }}
+  		</div>
+  	</div>
+  	
+  	
+   <div class='form-group'>
+  	   {{ form_label(editarJurisdiccion.juriCapitulo) }}
+  	   <div {{ block('widget_container_attributes') }} class="col-sm-9" >
+    		 {{ form_widget(editarJurisdiccion.juriCapitulo, {'attr': {'class':'form-control ui-selectmenu-button ui-widget ui-state-default ui-corner-all'} }) }}
+       </div>
+  </div>
+  	
+  
+  {{ form_widget(editarJurisdiccion.juriId) }}
+  {{ form_widget(editarJurisdiccion.juriEditar) }}
+  
+  
+    {%- block submit_widget_juris -%}
+    <br>
+		<div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
+			<div class="ui-dialog-buttonset">
+    			<button type="{{ type|default('submit') }}" class="editarJuris btn ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only"  }}>
+     	  		 <span class="ui-button-text">Confirmar</span>
+ 	   			</button>
+ 	   			
+ 	   			<button id="eliminarJuris" class="btn ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only"  }}>
+     	  		 <span class="ui-button-text">Eliminar</span>
+ 	   			</button>
+ 	   			
+ 	   			
+ 	   			<button class="cancelarBoton btn ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only"  }}>
+     	  		 <span class="ui-button-text">Cancelar</span>
+ 	   			</button>
+ 	   		</div>
+ 	   	</div>
+    {%- endblock submit_widget_juris -%}
+ 	{{ form_end(editarJurisdiccion) }}
+  
+  
+  </div>
+  
+  
+  
+  
+  {# TITULO #}
+  
+  {% form_theme editarTitulo _self %}
+  <div id="editarTituloDLG" title="Títulos">
+  
+  	{{ form_start(editarTitulo) }}
+  	{{ form_errors(editarTitulo) }}
+  	
+  	<div class='form-group'>
+  		{{ form_label(editarTitulo.titu_detalle) }}
+  		<div {{ block('widget_container_attributes') }} class="col-sm-9">
+  			{{ form_widget(editarTitulo.titu_detalle,{'attr': {'class':'form-control'}}) }}
+  		</div>
+  	</div>
+  	
+     <div class='form-group'>
+     		{{ form_label(editarTitulo.titu_capitulo) }}
+     		<div {{ block('widget_container_attributes') }} class="col-sm-9">
+     			{{ form_widget(editarTitulo.titu_capitulo, {'attr': {'class':'form-control ui-selectmenu-button ui-widget ui-state-default ui-corner-all'} })  }}
+     		</div>     
+     </div>
+  	
+  	  <div class='form-group'>
+  			{{ form_label(editarTitulo.titu_habilitado) }}
+  		<div {{ block('widget_container_attributes') }} class="col-sm-9">
+				{% for child in editarTitulo.titu_habilitado %}
+  				{{ form_label(child) }}
+  				{{ form_widget(child, {'attr': {'name': 'inlineRadioOptionsTitu', 'id': 'inlineRadioTitu' ~ loop.index }}) }}
+  				
+  			{% endfor %}
+  		</div>
+  </div>
+  	
+
+  {{ form_widget(editarTitulo.titu_id) }}
+  {{ form_widget(editarTitulo.titu_editar) }}
+  
+    {%- block submit_widget_titu -%}
+    <br>
+		<div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
+			<div class="ui-dialog-buttonset">
+    			<button type="{{ type|default('submit') }}" class="editarTitu btn ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only"  }}>
+     	  		 <span class="ui-button-text">Confirmar</span>
+ 	   			</button>
+ 	   			
+ 	   			<button id="eliminarTitu" class="btn ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only"  }}>
+     	  		 <span class="ui-button-text">Eliminar</span>
+ 	   			</button>
+ 	   			
+ 	   			
+ 	   			<button class="cancelarBoton btn ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only"  }}>
+     	  		 <span class="ui-button-text">Cancelar</span>
+ 	   			</button>
+ 	   		</div>
+ 	   	</div>
+    {%- endblock -%}
+ 	{{ form_end(editarTitulo) }}
+  
+  
+  
+  </div>
+  
+    
+  
+  
+
+   {#SUBTITULO #}
+
+ 
+  {% form_theme editarSubtitulo _self %}
+  <div id="editarSubtituloDLG" title="Subtítulos">
+  
+  	{{ form_start(editarSubtitulo) }}
+  	{{ form_errors(editarSubtitulo) }}
+  	
+  	<div class='form-group'>
+  		{{ form_label(editarSubtitulo.subt_detalle) }}
+  		<div {{ block('widget_container_attributes') }} class="col-sm-9">
+  			{{ form_widget(editarSubtitulo.subt_detalle,{'attr': {'class':'form-control'}}) }}
+  		</div>
+  	</div>
+  	
+  	 <div class='form-group'>
+     		{{ form_label(editarSubtitulo.subt_titulo) }}
+     		<div {{ block('widget_container_attributes') }} class="col-sm-9">
+     			{{ form_widget(editarSubtitulo.subt_titulo, {'attr': {'class':'form-control ui-selectmenu-button ui-widget ui-state-default ui-corner-all'} })  }}
+     		</div>     
+     </div>
+  	
+  	<div class='form-group'>
+  			{{ form_label(editarSubtitulo.subt_habilitado) }}
+  		<div {{ block('widget_container_attributes') }} class="col-sm-9">
+				{% for child in editarSubtitulo.subt_habilitado %}
+  				{{ form_label(child) }}
+  				{{ form_widget(child, {'attr': {'name': 'inlineRadioOptionsSubt', 'id': 'inlineRadioSubt' ~ loop.index }}) }}
+  				
+  			{% endfor %}
+  		</div>
+    </div>
+  	
+  {{ form_widget(editarSubtitulo.subt_id) }}
+  {{ form_widget(editarSubtitulo.subt_editar) }}
+  
+  
+    {%- block submit_widget_subt -%}
+    <br>
+		<div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
+			<div class="ui-dialog-buttonset">
+    			<button type="{{ type|default('submit') }}" class="editarSubt btn ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only"  }}>
+     	  		 <span class="ui-button-text">Confirmar</span>
+ 	   			</button>
+ 	   			
+ 	   			<button id="eliminarSubt" class="btn ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only"  }}>
+     	  		 <span class="ui-button-text">Eliminar</span>
+ 	   			</button>
+ 	   			
+ 	   			
+ 	   			<button class="cancelarBoton btn ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only"  }}>
+     	  		 <span class="ui-button-text">Cancelar</span>
+ 	   			</button>
+ 	   		</div>
+ 	   	</div>
+    {%- endblock -%}
+ 	{{ form_end(editarSubtitulo) }}
+  
+  
+  
+  </div>
+  
+  
+
+ {% endblock %}
+ 
+ {% endblock %}
+
+ 
+ 
+
+
+{% block javascript %}
+  <script type="text/javascript">
+
+  $(function() {
+	$("ui.tooltip").siblings(".tooltip").remove();
+	$( document ).tooltip();
+	});
+	$( document ).ready(function() {
+		var adminObject = new Admin();
+		adminObject.init();
+		adminObject.habilitacionAnio = "{{ path("_habilitacionAnio") }}";
+		adminObject.getTabla = "{{ path("_getTabla") }}";
+		adminObject.eliminarAnio = "{{ path("_eliminarAnio") }}";
+		adminObject.eliminarCapitulo = "{{ path("_eliminarCapitulo") }}";
+		adminObject.eliminarJuris = "{{ path("_eliminarJuris") }}";
+		adminObject.eliminarTitu = "{{ path("_eliminarTitu") }}";
+		adminObject.eliminarSubt = "{{ path("_eliminarSubt") }}";
+		adminObject.eliminarAres = "{{ path("_eliminarAres") }}";
+		adminObject.eliminarCain = "{{ path("_eliminarCain") }}";
+		adminObject.eliminarIndi = "{{ path("_eliminarIndi") }}";
+		adminObject.titulos = {{ titulos|raw }};
+		adminObject.subtitulos = {{ subtitulos|raw }};
+		adminObject.anios = {{ anios|raw }};
+
+
+		
+	});
+  </script>
+  
+{% endblock %}

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+
+
+<head>
+{% block css %}
+	{% stylesheets filter='cssrewrite'
+		'bundles/abm/css/bootstrap.css'
+		'bundles/abm/css/bootstrap-theme.css'
+	output='css/layout.css' 
+	%}
+	<link rel="stylesheet" href="{{ asset_url }}" />
+  	{% endstylesheets %}
+  	
+  	{% stylesheets
+   
+    'bundles/abm/fonts/glyphicons-halflings-regular.ttf'
+    'bundles/abm/fonts/SourceSansPro-Bold.otf'
+    'bundles/abm/fonts/SourceSansPro-Light.otf'
+    'bundles/abm/fonts/SourceSansPro-Regular.otf'
+    'bundles/abm/fonts/SourceSansPro-Black.otf'
+	%}{% endstylesheets %}
+{% endblock css %}
+
+{% block jss %}
+	{% javascripts
+	 	'@abmBundle/Resources/public/js/jquery-1.11.2.min.js'
+	 	'@abmBundle/Resources/public/js/bootstrap.js'
+ 		output='js/layout.js' %}
+  		<script src="{{ asset_url }}"></script>
+ 	{% endjavascripts %}
+{% endblock jss %}
+
+</head>
+
+<title>ABM Estadísticas</title>
+
+<body> 
+<meta http-equiv="Content-Type" content="text/html">
+
+{% block body %}
+
+
+{% endblock body %}
+
+
+  
+	{% block javascript %}
+
+	{% endblock javascript %}
+
+  
+
+</body>
+
+</html>

@@ -1,0 +1,210 @@
+function Admin() {
+	
+};
+
+Admin.prototype.init = function() {
+	this.initDialogs();
+	this.setupEvents();
+};
+
+Admin.prototype.initDialogs = function() {
+	
+	$("#agregarAnioDLG").dialog({
+		resizable: false,
+		draggable: true,
+		modal: true,
+		autoOpen: false,
+		height: 270,
+		width: 440,
+		show: {
+			 effect: "fade",
+			 duration: 1000
+		},
+		hide: {
+			 effect: "fade",
+			 duration: 1000
+		},
+		dialogClass: 'dlgfixed',
+	});
+	
+	$(".dlgfixed").center();
+
+	$("[name='anio']").addClass('form-horizontal');
+//	$(".required").addClass("control-label col-sm-3");
+//	$("#anio_anioDetalle").addClass("form-control ui-selectmenu-button ui-widget ui-state-default ui-corner-all");
+//	$("#anio_anioHabilitado").addClass
+	
+};
+
+Admin.prototype.setupEvents = function() {
+	$("#progressbar").hide();
+	var self = this;
+	self.aaData = "";
+	self.oTable = "";
+	self.habilitar = '&nbsp<a href="javascript:void(0)" class="habilitacion" title="Habilitar"><i class="fa fa-thumbs-o-up"></i></a>';
+	self.deshabilitar = '&nbsp<a href="javascript:void(0)" class="habilitacion" title="Deshabilitar"><i class="fa fa-thumbs-o-down"></i></a>';
+	
+	$("#tablaAnio").on("click",function(e) {
+		 $(function() {
+			    var progressbar = $( "#progressbar" ),
+			      progressLabel = $( ".progress-label" );
+			 
+			    progressbar.progressbar({
+			      value: false,
+			    });
+		 });
+
+			 
+		$("#progressbar").show();
+		
+		e.preventDefault();
+		self.ajaxAnio();
+    });
+	
+	$("#datatable").on("click",".habilitacion",function(e) {
+		e.preventDefault();
+		var row = $(this).closest("tr")[0];
+		var object = self.oTable.fnGetData( $(this).closest("tr") );
+		$.ajax({
+			url: self.habilitacionAnio,
+			type: 'POST',
+			async: true,
+			data: { anioId: object.anioId },
+			success: function(response, textStatus, xhr) {
+				self.oTable.fnUpdate({anioId:object.anioId, anioHabilitado: response.habilitado},row);
+			},
+			error: function(xhr, textStatus, errorThrown) {
+                alert("ERROR: " + textStatus);
+                return false;
+            }
+		});
+	});
+	
+	$("#datatable").on("click"),".eliminar",function(e) {
+		e.preventDefault();
+		var row = $(this).closest("tr")[0];
+		var object = self.oTable.fnGetData( $(this).closest("tr") );
+		$.ajax({
+			url: self.eliminarAnio,
+			type: 'POST',
+			async: true,
+			data: { anioId: object.anioId },
+			success: function(response, textStatus, xhr) {
+				self.oTable.fnDeleteRow(row);
+			},
+			error: function(xhr, textStatus, errorThrown) {
+                alert("ERROR: " + textStatus);
+                return false;
+            }
+		});
+	}
+	
+	$("#agregarAnio").on("click",function(e) {
+		e.preventDefault();
+		$("#agregarAnioDLG").dialog("open");
+	});
+	
+	//FORM AÑO
+	
+	$("[name='anio']").submit(function(e) {
+		if ($("#anio_anioId").val() != -1)
+			return;
+		
+		e.preventDefault();
+		alert('Seleccione un año');
+
+	});
+	
+
+
+};
+
+Admin.prototype.ajaxAnio = function() {
+	var self = this;
+	$.ajax({
+			url: self.getTablaAnio,
+			type: 'POST',
+			async: true,
+			success: function(response, textStatus, xhr) {
+				self.createAnioDatatable(response)
+			},
+			error: function(xhr, textStatus, errorThrown) {
+                alert("ERROR: " + textStatus);
+                return false;
+            }
+	});
+};
+
+Admin.prototype.createAnioDatatable = function(aaData) {
+	var self = this;
+	$("#info").hide();
+	self.oTable = $("#datatable").dataTable({
+		"bAutoWidth": false,
+		"bPaginate": true,
+		"bFilter" : true,
+		"bLengthChange": true,
+		"bProcessing":true,
+		"bInfo": true,
+		"bSort": true,
+		"bStateSave": true,
+		"bJQueryUI": true,
+	    "sScrollX": "100%",
+	    "bScrollCollapse": true,
+	    "bDestroy": true,
+		"oLanguage": {
+			"sSearch": "Filtrar:",
+			"sEmptyTable": "No se encontraron resultados.",
+			"sInfo": "<b>Total: _TOTAL_ resultado(s).",
+			
+			"sInfoEmpty": "No se encontraron resultados.",
+			"sZeroRecords": "No se encontraron resultados",
+			"sInfoFiltered": " - de _MAX_ archivos",
+			"oPaginate": {
+	  	        "sPrevious": "Anterior",
+		  	    "sNext": "Siguiente",
+	  	     },
+			"sLengthMenu": "Mostrar _MENU_ resultados",
+		      "sLengthMenu": 'Mostrar <select>'+
+		        '<option value="10">10</option>'+
+		        '<option value="20">20</option>'+
+		        '<option value="30">30</option>'+
+		        '<option value="40">40</option>'+
+		        '<option value="50">50</option>'+
+		        '<option value="-1">Todos</option>'+
+		        '</select> resultados'
+			
+		},
+		
+		"data": $.parseJSON(aaData) ,
+		 "initComplete": function( settings, json ) {
+			 $("#progressbar").hide();
+		},
+		"aoColumns" :  [ 
+		                 { 
+		                	 "sTitle": "ID (Año)",
+		                	 "mData" : null,
+		                	 "sWidth": "20%",
+		                	 "mRender": function( data, type, row) {
+		                         return row.anioId ? row.anioId : 'null';
+		                     }
+		                 },
+		                { 
+			                   "sTitle": "Habilitado",
+			                   "mData" : null,
+			                   "sWidth": "20%",
+			                   "mRender": function( data, type, row) {
+				                	   return (row.anioHabilitado == 1) ? "SI" + self.deshabilitar : "NO" + self.habilitar;
+			                    }
+			            },
+			            {
+		                	"sTitle": "Eliminar",
+		                	"mData": null,
+		                	 "sWidth": "20%",
+			                "mRender": function( data, type, row) {
+			                	return '<a href="javascript:void(0)" class="eliminar" title="Eliminar"><button class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only">&nbsp<i class="fa fa-minus" role="button"></i>&nbsp</button></a>';
+			                }
+			            	
+			            }
+		               ]	,
+	});	
+};

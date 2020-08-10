@@ -1,0 +1,120 @@
+{% extends "WebEstadisticasBundle::layout.html.twig" %}
+{% block Settings %}{{ parent() }}{% endblock %}
+
+{% block css %}
+		{{ parent() }}
+		
+		{% stylesheets filter='cssrewrite'
+ 			'bundles/webestadisticas/css/index.css' output='css/index.css'
+ 		%}
+			<link rel="stylesheet" href="{{ asset_url }}" />
+  		{% endstylesheets %}
+{% endblock %}
+
+{% block jss %}
+	{{ parent() }}
+
+{% endblock %}
+
+{% block head %}
+
+<div id='cssmenu'>
+	<ul>
+   		<li class='active'><a href='{{ path("index") }}'><span>Principal</span></a></li>
+   		<li><a href='{{ institucional }}' target="_blank"><span>Institucional</span></a></li>
+   		<li class='has-sub'><a href='javascript:void(0)'><span>Anuarios</span></a>
+     	<ul>
+        	 <li><a href='{{ path("_estad_mapa") }}' id='mapa'><span>Mapa</span></a></li>
+         	 <li><a href='javascript:void(0)' id='porano'><span>Por año</span></a></li>
+         	 <li><a href='javascript:void(0)' id='porfuerjuris'><span>Por fuero o jurisdicción</span></a>
+         	 <li class='last'><a href='javascript:void(0)' id='lugConsulta'><span>Lugares de consulta de los libros de estadísticas</span></a></li>
+        </ul>
+   		</li>
+   		<li class='has-sub'><a href='javascript:void(0)'><span>Trabajos Especiales</span></a>
+   		<ul>
+   			<li><a href='javascript:void(0)' id='indicadoresMenu'><span>Indicadores</span></a></li>
+   			<li><a href='javascript:void(0)' id='evolucionMenu'><span>Evolución</span></a></li>
+   			<li><a href='javascript:void(0)' id='fallosMenu'><span>Fallos</span></a></li>
+   			<li class='last'><a href='{{ path("_otros_trabajos") }}' id='otrosTrabajosMenu'><span>Otros Trabajos</span></a>	  
+   		</ul>
+   		</li>
+   		<li class='last'><a href='javascript:void(0)' id='contact'><span>Contáctenos</span></a></li>
+	</ul>
+ </div>
+	{{ parent() }}
+	
+{% endblock %}
+
+{% block titulo %}
+	{{ parent() }}
+{% endblock %}
+
+
+ {% block body %}
+ {% set i = 0 %}
+
+
+<div class="bodyIndex">
+	<div id="boxNovedades">
+		<div id="news">Novedades</div>
+
+		<table id="novedades">
+			<thead>
+				<th>Título (Click en el nombre para abrir)</th>
+				<th>Descarga</th>	
+			</thead>
+			<tbody>
+				{% for i in 0.. news|length-1 %}
+					{% set novedad = news[i] %}
+					<tr>
+						<td>
+							<h4>
+								<a href="{{ novedad.assetLink }}" class="assetDescarga" target="_blank">
+								{{ novedad.detalle }}
+								</a>
+							</h4>
+						</td>
+						<td>
+							<a href="{{ novedad.assetDescarga }}" download>
+								<h4>
+									{% image '@WebEstadisticasBundle/Resources/public/images/download.png' %}
+   				 					<img src="{{ asset_url }}" alt="Example" />
+									{% endimage %}
+								</h4>
+							</a>
+						</td>
+					</tr>
+	 			{% endfor %}
+	 		</tbody>
+	 	</table>
+	 </div>
+
+	<div id="objetivos">
+ 		<div id="titleObjetivos">Objetivos de las Estadísticas</div>
+ 		<div id="textObjetivos">
+ 			<ul>
+ 				<li>
+ 					<p>Dentro del Poder Judicial de la Nación, proveer información confiable a todos los sectores para el control de gestión y toma de decisiones.</p>
+ 				</li>
+ 				<li>
+ 					<p>Al público en general, brindar un panorama del estado de situación de la Institución y datos para estudio e investigación.</p>
+ 				</li>
+ 			</ul>
+ 		</div>
+	</div>
+</div>
+ 
+
+ 	{{ parent() }}
+ {% endblock %}
+ 
+ 
+ {% block javascript %}
+ {{ parent() }}
+ 	 
+ {% endblock %}
+ 
+ {% block footer %}
+ {{ parent() }}
+ {% endblock %}
+	

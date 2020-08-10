@@ -1,0 +1,260 @@
+﻿<div id="consulta" title="Lugares de consulta de los libros de estadísticas.">
+  <ul><li>BIBLIOTECA I.N.D.E.C.<br>Julio Argentino Roca 609 - Tel. (011) - 4349-9625 </li>
+  <li>BIBLIOTECA DE LA FACULTAD DE DERECHO Y CS. SOCIALES - U.B.A. -<br>Av. Figueroa Alcorta 2263 - Tel. (011) - 4809-5634</li>
+  <li>BIBLIOTECA DE LA U.B.A.<br>Azcuenaga 280 1° Piso - Tel. (011) - 4953-0420</li>
+  <li>BIBLIOTECA DE LA CORTE SUPREMA DE JUSTICIA DE LA NACIÓN<br>Talcahuano 550 7° Piso - Tel. (011) - 4370-4600</li>
+  <li>BIBLIOTECA DE LA PROCURACIÓN GRAL. DE LA NACIÓN<br>Hipólito Irigoyen 765 - Tel. (011) - 4338-4369</li>
+  <li>BIBLIOTECA DE CONGRESO DE LA NACION<br>Hipólito Irigoyen 1750 - Tel. (011) - 4010-3000</li>
+  </ul>
+</div>
+
+<div id="ALERTA" title="Alerta">
+	<div id='alertaMensaje'></div>
+	<a id='alertaAceptar' class="btn ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only">
+    <span class="ui-button-text">Aceptar</span></a>
+</div>
+
+<div id="contactenos" title="Contáctenos.">
+ <ul><li>Dirección postal:<br>
+  Sarmiento 877, Piso 9, 1041 Ciudad Autónoma de Buenos Aires, ARGENTINA</li>
+   <li>Correo Electrónico:<br>
+   <a href="mailto:secretaria.estadisticas@pjn.gov.ar">secretaria.estadisticas@pjn.gov.ar</a></li></ul>
+</div>
+
+<div id="selEstad" title="Estadísticas por año">
+	<form class="form-horizontal" role="form" id="formDeArchivo">
+		{#div de años#}
+		<div class="form-group">
+			<label for="select" class="col-xs-2 col-xs-offset-1 control-label">Año:</label>
+			<div class="col-xs-8 col-xs-offset-1">
+	 				<select class="form-control ui-selectmenu-button ui-widget ui-state-default ui-corner-all" id="listadoAnios" attribute="autofocus">
+  					<option value="default">Seleccione Año</option>
+				</select>
+			</div>
+		</div>
+		{#div de capitulos#}
+		<div class="form-group">
+			<label for="select" class="col-xs-2 col-xs-offset-1 control-label">Jurisdicción:</label>
+			<div class="col-xs-8 col-xs-offset-1">
+				<select class="form-control ui-selectmenu-button ui-widget ui-state-default ui-state-disabled ui-corner-all" id="listadoCapitulos" disabled='disabled'>
+					<option value="default">Seleccione Fuero/Jurisdicción:</option>
+				</select>	
+			</div>
+		</div>
+		{#div de titulos#}
+		<div class="form-group">
+			<label for="select" class="col-xs-2 col-xs-offset-1 control-label">Título:</label>
+			<div class="col-xs-8 col-xs-offset-1">
+				<select class="form-control ui-selectmenu-button ui-widget ui-state-default ui-state-disabled ui-corner-all" id="listadoDivisiones" disabled='disabled'>
+					<option value="default">Seleccione Título</option>
+				</select>	
+			</div>
+		</div>
+		{# div de subtitulos #}
+		<div class="form-group">
+			<label for="select" class="col-xs-2 col-xs-offset-1 control-label">Subtítulo:</label>
+			<div class="col-xs-8 col-xs-offset-1">
+				<select class="form-control ui-selectmenu-button ui-widget ui-state-default ui-state-disabled ui-corner-all" id="listadoSubtitulos" disabled='disabled'>
+					<option value="default">Seleccione Subtítulo</option>
+				</select>	
+			</div>
+		</div>
+		{#div de archivos#}
+		<div class="form-group">
+			<label for="select" class="col-xs-2 col-xs-offset-1 control-label">Archivo:</label>
+			<div class="col-xs-8 col-xs-offset-1">
+				<select class="form-control ui-selectmenu-button ui-widget ui-state-default ui-state-disabled ui-corner-all" id="listadoArchivos" name="listadoArchivos" disabled='disabled'>
+					<option value="default">Seleccione Archivo</option>
+				</select>	
+			</div>
+		</div>
+		{#TEXTAREA#}	
+		<div class="form-group">
+		<textarea id="descripcion" class="textArea ui-accordion-content ui-helper-reset ui-widget-content ui-corner-bottom ui-accordion-content-active" rows="6" cols="55" wrap='off' readonly>Descripción del archivo a solicitar.
+		</textarea>
+		</div>
+		<div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
+			<div class="ui-dialog-buttonset">
+				<a href='javascript:void(0)' id="abrirArchivo" class="btn ui-button ui-widget ui-state-default ui-state-disabled ui-corner-all ui-button-text-only" target="_blank" disabled='disabled'>
+				<span class="ui-button-text">Abrir</span></a>
+    			<a id='descargarArchivo' class="btn ui-button ui-widget ui-state-default ui-state-disabled ui-corner-all ui-button-text-only"  disabled='disabled' download>
+    			<span class="ui-button-text">Descargar</span></a>
+			</div>
+		</div>
+	</form>
+</div>
+	
+	<div id="fuerJuris" title="Estadisticas por Jurisdicción">
+	    <form class="form-horizontal" role="form" id="formDeArchivoJuris">
+				{#div de jurisdicciones#}
+				<div class="form-group">
+ 					<label for="select" class="control-label col-xs-2 col-xs-offset-1">Jurisdicción:</label>
+ 					<div class="col-xs-8 col-xs-offset-1">
+ 						<select class="form-control ui-selectmenu-button ui-widget ui-state-default ui-corner-all" id="listadoJurisdicciones" attribute="autofocus">
+  							<option value="default">Seleccione Jurisdiccion</option>
+						</select>
+					</div>
+				</div>
+				{#div de anios#}
+				<div class="form-group">
+					<label for="select" class="control-label col-xs-2 col-xs-offset-1">Año:</label>
+					<div class="col-xs-8 col-xs-offset-1">
+						<select class="form-control ui-selectmenu-button ui-widget ui-state-default ui-state-disabled ui-corner-all" id="listadoAniosJuris" disabled='disabled'>
+  							<option value="default">Seleccione Año</option>
+						</select>
+					</div>
+				</div>
+				{#div de titulos#}
+				<div class="form-group">
+					<label for="select" class="control-label col-xs-2 col-xs-offset-1">Título:</label>
+					<div class="col-xs-8 col-xs-offset-1">
+						<select class="form-control ui-selectmenu-button ui-widget ui-state-default ui-state-disabled ui-corner-all" id="listadoDivisionesJuris" disabled='disabled'>
+  							<option value="default">Seleccione Título</option>
+						</select>
+					</div>
+				</div>
+				{# div de subtitulos #}
+				<div class="form-group">
+					<label for="select" class="col-xs-2 col-xs-offset-1 control-label">Subtítulo:</label>
+						<div class="col-xs-8 col-xs-offset-1">
+							<select class="form-control ui-selectmenu-button ui-widget ui-state-default ui-state-disabled ui-corner-all" id="listadoSubtitulosJuris" disabled='disabled'>
+								<option value="default">Seleccione Subtítulo</option>
+							</select>	
+						</div>
+				</div>				
+				{#div de archivos#}
+				<div class="form-group">
+					<label for="select" class="control-label col-xs-2 col-xs-offset-1">Archivo:</label>
+					<div class="col-xs-8 col-xs-offset-1">
+						<select class="form-control ui-selectmenu-button ui-widget ui-state-default ui-state-disabled ui-corner-all" id="listadoArchivosJuris" name="listadoArchivosJuris" disabled='disabled'>
+  							<option value="default">Seleccione Archivo</option>
+						</select>
+					</div>
+				</div>
+				{#TEXTAREA#}	
+				<div class="form-group">
+					<textarea id="descripcionJuris" class="textArea ui-accordion-content ui-helper-reset ui-widget-content ui-corner-bottom ui-accordion-content-active" rows="6" cols="55" wrap='off' readonly>Descripción del archivo a solicitar.
+					</textarea>
+				</div>
+				<div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
+					<div class="ui-dialog-buttonset">
+						<a href='javascript:void(0)' class="btn ui-button ui-widget ui-state-default ui-state-disabled ui-corner-all ui-button-text-only" id="abrirArchivoJuris" target="_blank">
+						<span class="ui-button-text">Abrir</span></a>
+						<a id='descargarArchivoJuris' class="btn ui-button ui-widget ui-state-default ui-state-disabled ui-corner-all ui-button-text-only" download><span class="ui-button-text">Descargar</span></a>
+					</div>
+				</div>
+		</form>
+	</div>
+	
+	
+<div id="fallos" title="Fallos">
+		
+	    <form class="form-horizontal" role="form" id="formDeFallos" >
+				<a href={{ asset('archivos/Trabajos_Especiales/Fallos/consideragral.htm') }} id="hrefFallos" target="_blank">Consideraciones generales</a><br><br>
+	    		{#div de anios#}
+				<div class="form-group">
+					<label for="select" class="control-label col-xs-2 col-xs-offset-1">Año:</label>
+					<div class="col-xs-8 col-xs-offset-1">
+						<select class="form-control ui-selectmenu-button ui-widget ui-state-default ui-corner-all" id="aniosFallos" attribute="autofocus">
+  							<option value="default">Seleccione Año</option>
+						</select>
+					</div>
+				</div>
+				{#div de tipos#}
+				<div class="form-group">
+					<label for="select" class="control-label col-xs-2 col-xs-offset-1">Tipo:</label>
+					<div class="col-xs-8 col-xs-offset-1">
+						<select class="form-control ui-selectmenu-button ui-widget ui-state-default ui-state-disabled ui-corner-all" id="tipoFallo" disabled='disabled'>
+  							<option value="default">Seleccione Tipo</option>
+						</select>
+					</div>
+				</div>
+				{#div de archivos#}
+				<div class="form-group">
+					<label for="select" class="control-label col-xs-2 col-xs-offset-1">Archivo:</label>
+					<div class="col-xs-8 col-xs-offset-1">
+						<select class="form-control ui-selectmenu-button ui-widget ui-state-default ui-state-disabled ui-corner-all" id="archivoFallo" name="archivoFallo" disabled='disabled'>
+  							<option value="default">Seleccione Fallo</option>
+						</select>
+					</div>
+				</div>
+				<br><a href='https://sjconsulta.csjn.gov.ar/sjconsulta/fallos/consulta.html' id="hrefFallos" target="_blank">Click ACA para fallos del 2013 en adelante</a><br>
+				{#div de boton#}
+				<div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
+					<div class="ui-dialog-buttonset">
+						<a href='javascript:void(0)' class="btn ui-button ui-widget ui-state-default ui-state-disabled ui-corner-all ui-button-text-only" id="abrirFallo" target="_blank">
+						<span class="ui-button-text">Abrir</span></a>
+					</div>
+				</div>
+		</form>
+</div>
+
+<div id="evolucion" title="Evolución por período">
+	<form class="form-horizontal" role="form" id="formEvolucion">
+				{#div de periodo#}
+				<div class="form-group">
+					<label for="select" class="control-label col-xs-2 col-xs-offset-1">Período:</label>
+					<div class="col-xs-8 col-xs-offset-1">
+						<select class="form-control ui-selectmenu-button ui-widget ui-state-default ui-corner-all" id="periodoEvolucion" attribute="autofocus">
+  							<option value="default">Seleccione Período</option>
+						</select>
+					</div>
+				</div>
+				{#div de Archivo#}
+				<div class="form-group">
+					<label for="select" class="control-label col-xs-2 col-xs-offset-1">Archivo:</label>
+					<div class="col-xs-8 col-xs-offset-1">
+						<select class="form-control ui-selectmenu-button ui-widget ui-state-default ui-state-disabled ui-corner-all" id="archivoEvolucion" attribute="autofocus">
+  							<option value="default">Seleccione Archivo</option>
+						</select>
+					</div>
+				</div>
+				{#div de boton#}
+				<div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
+					<div class="ui-dialog-buttonset">
+						<a href='javascript:void(0)' class="btn ui-button ui-widget ui-state-default ui-state-disabled ui-corner-all ui-button-text-only" id="abrirEvolucion" target="_blank">
+						<span class="ui-button-text">Abrir</span></a>
+					</div>
+				</div>			
+	</form>
+</div>
+
+<div id="indicadores" title="Indicadores">
+	<form class="form-horizontal" role="form" id="formIndicadores">
+		    	{#div de anios#}
+				<div class="form-group">
+					<label for="select" class="control-label col-xs-2 col-xs-offset-1">Año:</label>
+					<div class="col-xs-8 col-xs-offset-1">
+						<select class="form-control ui-selectmenu-button ui-widget ui-state-default ui-corner-all" id="aniosIndicadores" attribute="autofocus">
+  							<option value="default">Seleccione Año</option>
+						</select>
+					</div>
+				</div>
+				{#div de capitulo#}
+				<div class="form-group">
+					<label for="select" class="control-label col-xs-2 col-xs-offset-1">Fuero/Jurisdicción:</label>
+					<div class="col-xs-8 col-xs-offset-1">
+						<select class="form-control ui-selectmenu-button ui-widget ui-state-default ui-state-disabled ui-corner-all" id="capituloIndicadores">
+  							<option value="default">Seleccione Fuero/Jurisdicción</option>
+						</select>
+					</div>
+				</div>
+				{#div de Archivo#}
+				<div class="form-group">
+					<label for="select" class="control-label col-xs-2 col-xs-offset-1">Archivo:</label>
+					<div class="col-xs-8">
+						<select class="form-control ui-selectmenu-button ui-widget ui-state-default ui-state-disabled ui-corner-all" id="archivoIndicadores">
+  							<option value="default">Seleccione Archivo</option>
+						</select>
+					</div>
+				</div>
+				{#div de botones#}
+				<div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
+					<div class="ui-dialog-buttonset">
+						<a href='javascript:void(0)'  class="btn ui-button ui-widget ui-state-default ui-state-disabled ui-corner-all ui-button-text-only" id="abrirIndicadores"  target="_blank">
+						<span class="ui-button-text">Abrir</span></a>
+						<a href={{ "javascript:void(0)" }} id='descargarIndicadores' class="btn ui-button ui-widget ui-state-default ui-state-disabled ui-corner-all ui-button-text-only" download><span class="ui-button-text">Descargar</span></a>
+					</div>
+				</div>
+	</form>
+</div>

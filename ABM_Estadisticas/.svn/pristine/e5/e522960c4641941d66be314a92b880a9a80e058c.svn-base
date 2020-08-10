@@ -1,0 +1,69 @@
+<?php
+
+namespace  abmestadisticas\abmBundle\Form;
+
+use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+
+class FormAnio extends AbstractType
+{
+	private $data;
+	
+	
+	public function __construct($data) {
+		$this->data = $data;
+	}
+	
+	public function buildForm(FormBuilderInterface $builder, array $options)
+	{
+		
+
+		//SELECT 1 //CHECKBOX 2 //RADIO
+		
+		$builder
+		->add('anioId', 'choice', array(
+				'choices'   => $this->data,
+				'preferred_choices' => array(0),
+				'multiple'  => false,
+				'expanded' => false,
+				'label' => "Año: ",
+				'label_attr' => array('class' => 'col-sm-3 control-label')
+		))				
+		->add('anioHabilitado', 'choice', array(
+				'choices' => array("1" => " Si","0" => " No"),
+				'multiple' => false,
+				'expanded' => true,
+				'label' => "Habilitado:",
+				'label_attr' => array('class' => 'col-sm-3'),
+// 				'attr' => array('name' => 'inlineRadioOptions')
+		))
+		->add('anioOpciones', 'choice', array(
+				'choices' => array('dupanio' => "Duplicar ultimo año"),
+				'multiple' => true, //multiples selecciones
+				'expanded' => true, //no select
+				'mapped' => false, //si no esta en la clase
+				'label' => 'Opciones avanzadas: ',
+				'label_attr' => array('class' => 'col-sm-3'),
+				
+		))
+		->add('anioGuardar', 'submit', array(
+		'label' => ' Confirmar ',
+		'attr' => array('class' => 'btn ui-button ui-widget ui-state-default ui-button-text-only')
+		));
+
+
+	}
+	
+	public function setDefaultOptions(OptionsResolverInterface $resolver)
+	{
+		$resolver->setDefaults(array(
+				'data_class' => 'abmestadisticas\abmBundle\Entity\Anio',
+		));
+	}
+
+	public function getName()
+	{
+		return 'anio';
+	}
+}

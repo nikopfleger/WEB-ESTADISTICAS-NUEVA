@@ -1,0 +1,151 @@
+{% extends "abmBundle::layout.html.twig" %}
+
+{% block css %}
+		{{ parent() }}
+		{% stylesheets filter='cssrewrite'
+			'bundles/abm/css/admin.css'
+			'bundles/abm/css/fontAwesomeDatatablesIntegration.css'
+			'bundles/abm/datatables/media/css/jquery.dataTables.css'
+			'bundles/abm/datatables/media/css/jquery.dataTables_themeroller.css'
+			'bundles/abm/fontAwesome/css/font-awesome.min.css'
+			'bundles/abm/jqueryui/jquery-ui.css'
+			'bundles/abm/jqueryUI/jquery-ui.structure.css'
+ 			'bundles/abm/jqueryUI/jquery-ui.theme.css'
+
+		
+		output='css/admin.css' %}
+			<link rel="stylesheet" type="text/css" href=" {{ asset_url }}" />
+		{% endstylesheets %}
+	
+{% endblock %}
+
+{% block jss %}
+	{{ parent() }}
+	{% javascripts
+	 	'@abmBundle/Resources/public/jqueryui/jquery-ui.js'
+	 	'@abmBundle/Resources/public/datatables/media/js/jquery.dataTables.min.js'
+	 	'@abmBundle/Resources/public/js/jquery.center.js'
+		'@abmBundle/Resources/public/js/admin.js'
+		output='js/admin.js'
+	%}
+	<script src="{{ asset_url }}"></script>
+	{% endjavascripts %}
+{% endblock %}
+
+{% block body %}	
+	{{ parent() }}
+	
+<div id='cssmenu'>
+	 <ul>
+	 	<li class='has-sub last'><a href='javascript:void(0)'><span>Base de datos página web</span></a>
+			<ul>
+				<li class='last'><a href='javascript:void(0)' id='agregarAnio'><span>Agregar Año</span></a></li>
+   				<li class='last'><a href='javascript:void(0)' id='tablaAnio'><span>Tabla Año</span></a>
+			</ul>
+		</li>
+	</ul>
+</div>
+
+	
+{# 	<div id='cssmenu'>#}
+    	
+{#              		   <li class="dropdown" class="dropdown" class="dropdown" class="dropdown" class="dropdown" class="dropdown" class="dropdown" class="dropdown" class="dropdown" class="dropdown" class="dropdown" class="dropdown" class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Base de Datos de Página Web <b class="caret"></b></a>#}
+{#                 		    <ul class="dropdown-menu" role="menu">#}
+{#                 		        <li><a href="#" id="tablaAnio">Tabla Año</a></li>#}
+{#                    		    	<li><a href="#">Tabla Año por Capítulo</a></li>#}
+{#                         		<li><a href="#">Tabla de Capítulos</a></li>#}
+{#                    		    	<li><a href="#">Tabla Jurisdiccion</a></li>#}
+{#                     		    <li><a href="#">Tabla de Títulos</a></li>#}
+{#                     		    <li><a href="#">Tabla de Subtítulos</a></li>#}
+{#                      		    <li><a href="#">Tabla Indicadores</a></li>#}
+{#                       		    <li><a href="#">Tabla de Capítulos de Indicadores</a></li>#}
+{#                      		    <li><a href="#">Tabla Periodos</a></li>#}
+{#                      			<li><a href="#">Tabla Evolución</a></li>#}
+{#                			        <li><a href="#">Tabla Novedades</a></li>#}
+{#                  			    <li><a href="#">Generar Año nuevo duplicando anterior</a></li>#}
+{#                    			    <li><a href="#">Tabla de Trabajos Especiales</a></li>#}
+{#                    			 </ul>#}
+{#               		  </li>#}
+{#                 	  <li><a href="#">Base de Datos General</a></li>#}
+{#             	</ul>#}
+{#       		</div>#}
+{#    		</div>#}
+{# 	</div>#}
+
+	<div id="body"><br>
+		<div id="info"  class="center">{{ mensajeInicial }}</div>
+		<div id="progressbar"><div class="progress-label">Cargando...</div></div>
+
+		<table id="datatable" class="hover compact"><thead></thead><tbody></tbody></table>
+	</div>
+	
+	
+	{# FORMS #}
+
+	
+	
+ {% block forms %}
+ 
+ {% form_theme agregarAnio _self %}
+ 
+ <div id="agregarAnioDLG" title="Agregar Año">
+ 	{{ form_start(agregarAnio) }}
+    {{ form_errors(agregarAnio) }}
+
+   
+  <div class='form-group'>
+  			 {{ form_label(agregarAnio.anioId) }}
+  			 <div {{ block('widget_container_attributes') }} class="col-sm-8" >
+    		 	{{ form_widget(agregarAnio.anioId, {'attr': {'class':'form-control ui-selectmenu-button ui-widget ui-state-default ui-corner-all'} }) }}
+    		 </div>
+  </div>
+
+  <div class='form-group'>
+  			{{ form_label(agregarAnio.anioHabilitado) }}
+  		<div {{ block('widget_container_attributes') }} class="col-sm-8">
+				{% for child in agregarAnio.anioHabilitado %}
+  				{{ form_label(child) }}
+  				{{ form_widget(child, {'attr': {'name': 'inlineRadioOptions', 'id': 'inlineRadio' ~ loop.index }}) }}
+  				
+  			{% endfor %}
+  		</div>
+  </div>
+
+
+  <div class='form-group'>
+	<div {{ block('widget_container_attributes') }} class="col-sm-8">
+		  {% for child in agregarAnio.anioOpciones %}
+		     {{ form_widget(child) }}
+			 {{ form_label(child) }}
+		 	 
+		  {% endfor %}
+    </div>
+  </div>
+    	 
+    
+    {{ form_end(agregarAnio) }}
+ </div>
+ {% endblock %}
+	
+	
+{% endblock body %}
+
+{% block javascript %}
+  <script type="text/javascript">
+
+  $(function() {
+	$("ui.tooltip").siblings(".tooltip").remove();
+	$( document ).tooltip();
+	});
+	$( document ).ready(function() {
+		var adminObject = new Admin();
+		adminObject.init();
+		adminObject.habilitacionAnio = "{{ path("_habilitacionAnio") }}";
+		adminObject.getTablaAnio = "{{ path("_getTablaAnio") }}";
+		adminObject.eliminarAnio = "{{ path("_eliminarAnio") }}";
+
+		
+	});
+  </script>
+  
+{% endblock javascript %}

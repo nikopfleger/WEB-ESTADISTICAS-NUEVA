@@ -1,0 +1,103 @@
+<?php
+
+namespace abmestadisticas\abmBundle\Entity;
+
+
+use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+
+/**
+ * Anio
+ *
+ * @ORM\Table()
+ * @ORM\Entity
+ */
+class Anio
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="anio_id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+	
+	//@ORM\GeneratedValue(strategy="IDENTITY")
+    private $anioId;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="anio_detalle", type="integer")
+     * @Assert\NotEqualTo(value=-1,message="Por favor seleccione un año")
+     *
+     * 
+     */
+
+    protected $anioDetalle;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="anio_habilitado", type="string", length=2)
+     * @Assert\NotBlank(message="Por favor seleccione una opción")
+     */
+    protected $anioHabilitado;
+
+    /**
+     * Get anioId
+     *
+     * @return integer 
+     */
+    public function getAnioId()
+    {
+        return $this->anioId;
+    }
+    
+    /**
+     * Set anioDetalle
+     *
+     * @param integer $anioDetalle
+     * @return Anio
+     */
+    public function setAnioDetalle($anioDetalle)
+    {
+        $this->anioDetalle = $anioDetalle;
+
+        return $this;
+    }
+
+    /**
+     * Get anioDetalle
+     *
+     * @return integer 
+     */
+    public function getAnioDetalle()
+    {
+        return $this->anioDetalle;
+    }
+
+    /**
+     * Set anioHabilitado
+     *
+     * @param string $anioHabilitado
+     * @return Anio
+     */
+    public function setAnioHabilitado($anioHabilitado)
+    {
+        $this->anioHabilitado = $anioHabilitado;
+
+        return $this;
+    }
+
+    /**
+     * Get anioHabilitado
+     *
+     * @return string 
+     */
+    public function getAnioHabilitado()
+    {
+        return $this->anioHabilitado;
+    }
+
+}

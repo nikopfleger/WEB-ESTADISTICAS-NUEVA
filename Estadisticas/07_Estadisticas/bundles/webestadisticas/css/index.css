@@ -1,0 +1,73 @@
+
+#news {
+	font-family: Source Sans Bold;
+	font-size: 24px;
+	margin-left: 5px;
+}
+
+#boxNovedades {
+	background-color: rgba(122, 185, 235, 0.61);
+	margin-top: 5px;
+	margin-left: 5px;
+	margin-right: 5px;
+	margin-bottom:5px;
+	padding: 10px,10px,10px,10px;
+	border-style: outset;
+	border-width: 2px;
+	border-color: black;
+}
+
+#novedades {
+	font-family: Source Sans Regular;
+	margin-left: 5px;
+	margin-right: 5px;
+
+	border-top-style:solid;
+	border-top-width:1px;
+	border-top-color: black;
+	width: 100%;
+}
+#novedades, th, td, tr {
+	font-size: 12px;
+	align: left;
+	text-align: left;
+}
+
+.assetDescarga {
+	color:black;
+	font-size: 16px;
+}
+.assetDescarga:hover
+{
+  text-decoration:none;
+  color:black;
+}
+
+#objetivos {
+	background-color: rgba(96, 238, 96, 0.45);
+	margin-top: 5px;
+	margin-left: 5px;
+	margin-right: 5px;
+	margin-bottom:5px;
+	padding: 10px,10px,10px,10px;
+	border-style: outset;
+	border-width: 2px;
+	border-color: black;
+}
+
+#titleObjetivos {
+	font-family: Source Sans Bold;
+	font-size: 24px;
+	margin-left: 5px;
+
+}
+
+#textObjetivos {
+	font-family: Source Sans Regular;
+	margin-left: 5px;
+	margin-right: 5px;
+
+	border-top-style:solid;
+	border-top-width:1px;
+	border-top-color: black;
+}

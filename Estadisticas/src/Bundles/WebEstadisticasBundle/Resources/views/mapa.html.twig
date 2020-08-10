@@ -1,0 +1,150 @@
+{% extends "WebEstadisticasBundle::layout.html.twig" %}
+{% block Settings %}{{ parent() }}{% endblock %}
+
+{% block css %}
+
+		{{ parent() }}
+		{% stylesheets filter='cssrewrite'
+			'bundles/webestadisticas/css/mapa.css'	output='css/mapa.css' %}
+			<link rel="stylesheet" type="text/css" href=" {{ asset_url }}" />
+		{% endstylesheets %}
+	
+{% endblock %}
+
+{% block jss %}
+  		{{ parent() }}
+  		<script src="https://maps.googleapis.com/maps/api/js"></script>
+  		{% javascripts 
+			'@WebEstadisticasBundle/Resources/public/js/mapa.js' output='js/mapa.js'
+  		%}
+  		<script src="{{ asset_url }}"></script>
+ 		{% endjavascripts %}
+{% endblock %}
+
+{% block head %}
+
+ <div id='cssmenu'>
+	<ul>
+   		<li><a href='{{ path("index") }}'><span>Principal</span></a></li>
+   		<li><a href='{{ institucional }}' target="_blank"><span>Institucional</span></a></li>
+   		<li class='has-sub active'><a href='javascript:void(0)'><span>Anuarios</span></a>
+     	<ul>
+        	 <li><a href='{{ path("_estad_mapa") }}' id='mapa'><span>Mapa</span></a></li>
+         	 <li><a href='javascript:void(0)' id='porano'><span>Por año</span></a></li>
+         	 <li><a href='javascript:void(0)' id='porfuerjuris'><span>Por fuero o jurisdicción</span></a>
+         	 <li class='last'><a href='javascript:void(0)' id='lugConsulta'><span>Lugares de consulta de los libros de estadísticas</span></a></li>
+        </ul>
+   		</li>
+   		<li class='has-sub'><a href='javascript:void(0)'><span>Trabajos Especiales</span></a>
+   		<ul>
+   			<li><a href='javascript:void(0)' id='indicadoresMenu'><span>Indicadores</span></a></li>
+   			<li><a href='javascript:void(0)' id='evolucionMenu'><span>Evolución</span></a></li>
+   			<li><a href='javascript:void(0)' id='fallosMenu'><span>Fallos</span></a></li>
+   			<li class='last'><a href='{{ path("_otros_trabajos") }}' id='otrosTrabajosMenu'><span>Otros Trabajos</span></a>	
+   		</ul>
+   		</li>
+   		<li class='last'><a href='javascript:void(0)' id='contact'><span>Contáctenos</span></a></li>
+	</ul>
+ </div>
+{% endblock %}
+
+{% block body %}
+  	<div id="seleccionMapa">
+  		<div id="tooltipDiv"><p class="bg-info" id="tooltipSelMapa">Haga click sobre la jurisdiccion en el mapa para seleccionar una jurisdicción o selecciónela desde el menú. <button type="button" class="close" id="tooltipSelMapaButton"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button></p></div>
+  	       			<div id="map_canvas"></div>
+           			<form class="form-horizontal" role="form" id="formMapa" action="javascript:void(0)" method="POST" target="_blank">
+           			{#div de jurisdicciones#}
+							<div class="form-group selects">
+ 								<label for="select">Jurisdicción:</label>
+ 								<select class="form-control ui-selectmenu-button ui-widget ui-state-default ui-corner-all" id="JurisdiccionesMapa" attribute="autofocus">
+  									<option value="default">Seleccione Jurisdicción/Resetear mapa</option>
+								</select>
+							</div>
+					{#div de anios#}
+							<div class="form-group selects">
+								<label for="select" id="aniosLabel">Año:</label>
+								<select class="form-control ui-selectmenu-button ui-widget ui-state-default ui-corner-all" id="AniosMapa" disabled='disabled'>
+  									<option value="default">Seleccione Año</option>
+								</select>
+							</div>
+					
+					{#div de titulos#}
+							<div class="form-group selects">
+								<label for="select" id="divisionesLabel">Título:</label>
+								<select class="form-control ui-selectmenu-button ui-widget ui-state-default ui-corner-all" id="DivisionesMapa" disabled='disabled'>
+  									<option value="default">Seleccione Título</option>
+								</select>
+							</div>
+					{# div de subtitulos #}
+							<div class="form-group selects">
+								<label for="select" id="subtitulosLabel">Subtítulo:</label>
+								<select class="form-control ui-selectmenu-button ui-widget ui-state-default ui-corner-all" id="SubtitulosMapa" disabled='disabled'>
+									<option value="default">Seleccione Subtítulo</option>
+								</select>								
+							</div>
+					{#div de archivos#}
+							<div class="form-group selects">
+								<label for="select" id="archivosLabel">Archivo:</label>
+								<select class="form-control ui-selectmenu-button ui-widget ui-state-default ui-corner-all" id="ArchivosMapa" name="listadoArchivosJuris" disabled='disabled'>
+  									<option value="default">Seleccione Archivo</option>
+								</select>
+							</div>
+					{#TEXTAREA#}	
+							<div class="form-group selects">
+								<label for="select" id="archivosLabel">Descripcion:</label>
+								<textarea id="descripcionMapa" class="textAreaMap" rows="6" cols="70" wrap='off' readonly>Descripción del archivo a solicitar.
+								</textarea>
+							</div>
+					{#botones#}
+							<div class="form-group selects">
+											<button type="submit" class="btn ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" id="abrirJurisMapa"><span class="ui-button-text">Abrir</span></button> 
+				   							<a id='descargarJurisMapa' class="btn ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" download><span class="ui-button-text">Descargar</span></a>
+							</div>
+													
+					</form>
+	</div>
+	{{ parent() }}
+{% endblock %}
+
+
+{% block javascript %}
+	
+	$(document).ready(function() {
+	
+		var mapObject = new Mapa();
+		
+		mapObject.anioUrl = "{{ path("_getanio") }}" ;
+		mapObject.CapitulosUrl = "{{ path("_getCapitulos") }}" ;
+		mapObject.ArchivosFallosUrl= '{{ path("_getArchivosFallos") }}';
+		mapObject.getUrlDescargaFallos= "{{ path("_getUrlDescargaFallos") }}";
+		mapObject.periodosUrl = "{{ path("_getPeriodos") }}";
+		mapObject.archivosEvoUrl = "{{ path("_getArchivosEvo") }}";
+		mapObject.indiCapUrl = "{{ path("_getCapitulosIndicadores") }}";
+		mapObject.archivosIndicadoresUrl = "{{ path("_getArchivosIndicadores") }}";
+		mapObject.getUrlDescargaIndicadores = "{{ path("_getUrlDescargaIndicadores") }}";
+		mapObject.getUrlDescargaEvolucion = "{{ path("_getUrlDescargaEvolucion") }}";
+		mapObject.SubtitulosUrl = "{{ path("_getSubtitulos") }}"
+		
+		
+		mapObject.getJurisUrl = "{{ path("_getJurisdicciones") }}";
+		mapObject.getAnioJurisdiccionesUrl ="{{ path("_getAnioJurisdicciones") }}";
+		mapObject.DivisionesUrl = "{{ path("_getDivisiones") }}";
+		mapObject.ArchivosUrl= "{{ path("_getArchivos") }}";
+		mapObject.getUrlDescarga= "{{ path("_getUrlDescarga") }}";
+		mapObject.obtenerCoordenadasUrl = "{{ path("_obtenerCoordenadas") }}";
+		mapObject.src = "https://sites.google.com/site/nicolaspfleger/estadisticas-1/Jurisdicciones.kml";
+		google.maps.event.addDomListener(window, 'load', mapObject.initialize());
+		mapObject.init();
+		
+	
+	
+	});
+
+
+{% endblock %}
+
+{% block footer %}
+ {{ parent() }}
+ {% endblock %}
+
+ 

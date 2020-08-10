@@ -1,0 +1,5 @@
+_assetic:
+    resource: .
+    type: assetic
+_app:
+    resource: 'G:\SLE\PAGINA WEB\Web Estadisticas NUEVA\Estadisticas\app/config/routing_dev.yml'

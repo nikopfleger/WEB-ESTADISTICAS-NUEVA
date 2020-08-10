@@ -1,0 +1,78 @@
+<?php
+
+namespace abmestadisticas\abmBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Subtitulo
+ *
+ * @ORM\Table()
+ * @ORM\Entity
+ */
+class Subtitulo
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="subt_id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $subt_id;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="subt_detalle", type="string", length=255)
+     */
+    private $subt_detalle;
+
+
+    /**
+     * Get subt_id
+     *
+     * @return integer 
+     */
+    public function getSubtId()
+    {
+        return $this->subt_id;
+    }
+
+  
+    /**
+     * Set subt_detalle
+     *
+     * @param string $subtDetalle
+     * @return Subtitulo
+     */
+    public function setSubtDetalle($subtDetalle)
+    {
+        $this->subt_detalle = $subtDetalle;
+
+        return $this;
+    }
+
+    /**
+     * Get subt_detalle
+     *
+     * @return string 
+     */
+    public function getSubtDetalle()
+    {
+        return $this->subt_detalle;
+    }
+    
+    /**
+     * Set subt_id
+     *
+     * @param integer $subt_id
+     * @return Subtitulo
+     */
+    public function setSubtId($subtId)
+    {
+    	$this->subt_id = $subtId;
+    
+    	return $this;
+    }
+}

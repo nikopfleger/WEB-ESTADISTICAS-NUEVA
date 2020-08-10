@@ -1,0 +1,156 @@
+{% extends "abmBundle::layout.html.twig" %}
+
+{% block css %}
+		{{ parent() }}
+		{% stylesheets filter='cssrewrite'
+			'bundles/abm/css/admin.css'
+			'bundles/abm/css/fontAwesomeDatatablesIntegration.css'
+			'bundles/abm/datatables/media/css/jquery.dataTables.css'
+			'bundles/abm/datatables/media/css/jquery.dataTables_themeroller.css'
+			'bundles/abm/fontAwesome/css/font-awesome.min.css'
+			'bundles/abm/jqueryui/jquery-ui.css'
+			'bundles/abm/jqueryUI/jquery-ui.structure.css'
+ 			'bundles/abm/jqueryUI/jquery-ui.theme.css'
+
+		
+		output='css/admin.css' %}
+			<link rel="stylesheet" type="text/css" href=" {{ asset_url }}" />
+		{% endstylesheets %}
+	
+{% endblock %}
+
+{% block jss %}
+	{{ parent() }}
+	{% javascripts
+	 	'@abmBundle/Resources/public/jqueryui/jquery-ui.js'
+	 	'@abmBundle/Resources/public/datatables/media/js/jquery.dataTables.min.js'
+	 	'@abmBundle/Resources/public/js/jquery.center.js'
+		'@abmBundle/Resources/public/js/admin.js'
+		output='js/admin.js'
+	%}
+	<script src="{{ asset_url }}"></script>
+	{% endjavascripts %}
+{% endblock %}
+
+{% block body %}	
+	{{ parent() }}
+	
+<div id='cssmenu'>
+	 <ul>
+	 	<li class='has-sub last'><a href='javascript:void(0)'><span>Base de datos página web</span></a>
+			<ul>
+				<li class='last'><a href='javascript:void(0)' id='agregarAnio'><span>Agregar Año</span></a></li>
+   				<li class='last'><a href='javascript:void(0)' id='tablaAnio'><span>Tabla Año</span></a>
+			</ul>
+		</li>
+	</ul>
+</div>
+
+	
+{# 	<div id='cssmenu'>#}
+    	
+{#              		   <li class="dropdown" class="dropdown" class="dropdown" class="dropdown" class="dropdown" class="dropdown" class="dropdown" class="dropdown" class="dropdown" class="dropdown" class="dropdown" class="dropdown" class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Base de Datos de Página Web <b class="caret"></b></a>#}
+{#                 		    <ul class="dropdown-menu" role="menu">#}
+{#                 		        <li><a href="#" id="tablaAnio">Tabla Año</a></li>#}
+{#                    		    	<li><a href="#">Tabla Año por Capítulo</a></li>#}
+{#                         		<li><a href="#">Tabla de Capítulos</a></li>#}
+{#                    		    	<li><a href="#">Tabla Jurisdiccion</a></li>#}
+{#                     		    <li><a href="#">Tabla de Títulos</a></li>#}
+{#                     		    <li><a href="#">Tabla de Subtítulos</a></li>#}
+{#                      		    <li><a href="#">Tabla Indicadores</a></li>#}
+{#                       		    <li><a href="#">Tabla de Capítulos de Indicadores</a></li>#}
+{#                      		    <li><a href="#">Tabla Periodos</a></li>#}
+{#                      			<li><a href="#">Tabla Evolución</a></li>#}
+{#                			        <li><a href="#">Tabla Novedades</a></li>#}
+{#                  			    <li><a href="#">Generar Año nuevo duplicando anterior</a></li>#}
+{#                    			    <li><a href="#">Tabla de Trabajos Especiales</a></li>#}
+{#                    			 </ul>#}
+{#               		  </li>#}
+{#                 	  <li><a href="#">Base de Datos General</a></li>#}
+{#             	</ul>#}
+{#       		</div>#}
+{#    		</div>#}
+{# 	</div>#}
+
+	<div id="body"><br>
+		<div id="info"  class="center">Haga clic en una opción de la barra de navegación para comenzar</div>
+		<table id="datatable" class="hover compact"><thead></thead><tbody></tbody></table>
+	</div>
+	
+	
+	{# FORMS #}
+
+	
+	
+ {% block forms %}
+ 
+ 
+{#  {% form_theme form with ['::common.html.twig', ':Form:fields.html.twig',#}
+{#                          'AppBundle:Form:fields.html.twig'] %}#}
+ 
+{# {% form_theme form 'AppBundle:Form:fields.html.twig' %}#}
+
+{# {% form_theme form.child 'AppBundle:Form:fields_child.html.twig' %}#}
+
+ 
+{#  {% extends ::base.html.twig %}#}
+
+{# {% form_theme form _self %}#}
+
+{# {% block choice_widget_expanded %}#}
+{#     <div {{ block('widget_container_attributes') }}>#}
+{#         {% for child in form %}#}
+{#             {{ form_widget(child, {'attr': 'star'}}) }}#}
+{#             {{ form_label(child) }}#}
+{#         {% endfor %}#}
+{#     </div>#}
+{# {% endblock %}#}
+ {% form_theme agregarAnio _self %}
+ 
+ <div id="agregarAnioDLG" title="Agregar Año">
+ 	{{ form_start(agregarAnio) }}
+    {{ form_errors(agregarAnio) }}
+
+ 	   {{ form_label(agregarAnio.anioDetalle) }}
+  	   {{ form_errors(agregarAnio.anioDetalle) }}
+       {{ form_widget(agregarAnio.anioDetalle) }}
+  <div class='form-group'>
+  {% block choice_widget_expanded %}
+  		<div {{ block('widget_container_attributes') }} class='col-sm-9'>
+
+  			{% for child in agregarAnio.anioHabilitado %}
+  				{{ form_widget(child, {'attr': {'name': 'inlineRadioOptions', 'id': 'inlineRadio' ~ loop.index }}) }}
+  				{{ form_label(child) }}
+  			{% endfor %}
+  		</div>
+  {% endblock choice_widget_expanded %}
+  
+
+   		 {{ form_errors(agregarAnio.anioOpciones) }}
+    	 {{ form_widget(agregarAnio.anioOpciones) }}
+    
+    {{ form_end(agregarAnio) }} 
+ </div>
+ {% endblock forms %}
+	
+	
+{% endblock body %}
+
+{% block javascript %}
+  <script type="text/javascript">
+
+  $(function() {
+	$("ui.tooltip").siblings(".tooltip").remove();
+	$( document ).tooltip();
+	});
+	$( document ).ready(function() {
+		var adminObject = new Admin();
+		adminObject.init();
+		adminObject.habilitacionAnio = "{{ path("_habilitacionAnio") }}";
+		adminObject.getTablaAnio = "{{ path("_getTablaAnio") }}";
+
+		
+	});
+  </script>
+  
+{% endblock javascript %}

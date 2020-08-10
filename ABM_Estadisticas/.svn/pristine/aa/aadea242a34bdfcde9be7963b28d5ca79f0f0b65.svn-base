@@ -1,0 +1,456 @@
+function Admin() {
+	
+};
+
+Admin.prototype.init = function() {
+	this.forms="";
+	this.oTable="";
+	this.row="";
+	this.object="";
+	this.initDialogs();
+	this.setupEvents();
+
+};
+
+Admin.prototype.initDialogs = function() {
+	
+	$("#agregarAnioDLG").dialog({
+		resizable: false,
+		draggable: true,
+		modal: true,
+		autoOpen: false,
+		height: 300,
+		width: 440,
+		show: {
+			 effect: "fade",
+			 duration: 1000
+		},
+		hide: {
+			 effect: "fade",
+			 duration: 1000
+		},
+		dialogClass: 'dlgfixed bold',
+	});
+	
+	$("#editarCapituloDLG").dialog({
+		resizable: false,
+		draggable: true,
+		modal: true,
+		autoOpen: false,
+		height: 300,
+		width: 440,
+		show: {
+			 effect: "fade",
+			 duration: 1000
+		},
+		hide: {
+			 effect: "fade",
+			 duration: 1000
+		},
+		dialogClass: 'dlgfixed bold',
+	});
+	
+	
+	
+	
+	
+	$( "#ALERTA" ).dialog({
+		resizable: false,
+		draggable: true,
+		modal: true,
+		autoOpen: false,
+		height: 220,
+		width: 350,
+		show: {
+			effect: "fade",
+			duration: 50
+		},
+		hide: {
+			effect: "fade",
+			duration: 50
+		},
+		dialogClass: 'dlgfixed',
+
+	});
+	
+	$(".dlgfixed").center();
+
+	$("[name='anio']").addClass('form-horizontal');
+	$("[name='capitulo']").addClass('form-horizontal');
+//	$(".required").addClass("control-label col-sm-3");
+//	$("#anio_anioDetalle").addClass("form-control ui-selectmenu-button ui-widget ui-state-default ui-corner-all");
+//	$("#anio_anioHabilitado").addClass
+	
+};
+
+Admin.prototype.setupEvents = function() {
+	$("#progressbar").hide();
+	var self = this;
+	self.aaData = "";
+	self.oTable = "";
+	self.habilitar = '&nbsp<a href="javascript:void(0)" class="habilitacion" title="Habilitar"><i class="fa fa-thumbs-o-up"></i></a>';
+	self.deshabilitar = '&nbsp<a href="javascript:void(0)" class="habilitacion" title="Deshabilitar"><i class="fa fa-thumbs-o-down"></i></a>';
+	
+	$("#tablaAnio").on("click",function(e) {
+		e.preventDefault();
+		self.ajaxTabla('Anio');
+    });
+	
+	$("#tablaCapitulo").on("click",function(e) {
+		e.preventDefault();
+		self.ajaxTabla('Capitulo');
+
+	});
+
+	/**
+	 * DATATABLES AÑO
+	 * 
+	 * 
+	 * 
+	 */
+	
+	$("#datatable").on("click",".habilitacion",function(e) {
+		$("#progressbar").show();
+		e.preventDefault();
+		var row = $(this).closest("tr")[0];
+		var object = self.oTable.fnGetData( $(this).closest("tr") );
+		$.ajax({
+			url: self.habilitacionAnio,
+			type: 'POST',
+			async: true,
+			data: { anioId: object.anioId },
+			success: function(response, textStatus, xhr) {
+				self.oTable.fnUpdate({anioId:object.anioId, anioHabilitado: response.habilitado},row);
+				$("#progressbar").hide();
+			},
+			error: function(xhr, textStatus, errorThrown) {
+                alert("ERROR: " + textStatus);
+                return false;
+            }
+		});
+	});
+	
+	$("#datatable").on("click",".eliminar",function(e) {
+		$("#alertaMensaje").empty();
+		$("#alertaMensaje").append("La eliminación del año provocará un borrado en cascada de todos los datos correspondientes al año. Desea continuar?");
+		$("#ALERTA").dialog("open");
+		
+		self.row = $(this).closest("tr")[0];
+		self.object = self.oTable.fnGetData( $(this).closest("tr") );
+
+
+	});
+	
+	/**
+	 * DATATABLES CAPITULO
+	 * 
+	 */
+	
+	$("#datatable").on("click",".editarCap",function(e) {
+		$("#editarCapituloDLG").dialog("open");
+		
+		self.row = $(this).closest("tr")[0];
+		self.object = self.oTable.fnGetData( $(this).closest("tr") );
+
+		$("#capitulo_capi_id").val(self.object.capiId);
+		$("#capitulo_capi_detalle").val(self.object.capiDetalle);
+	});
+
+	
+	
+	$("#ALERTA").on("click","#alertaAceptar",function(e) {
+		$("#ALERTA").dialog("close");
+		$("#alertaMensaje").empty();
+		
+		$("#progressbar").show();
+		e.preventDefault();
+
+		$.ajax({
+			url: self.eliminarAnio,
+			type: 'POST',
+			async: true,
+			data: { anioId: self.object.anioId },
+			success: function(response, textStatus, xhr) {
+				self.oTable.fnDeleteRow(self.row);
+				$("#progressbar").hide();
+				
+				$("#info").empty();
+				$("#info").append("Operación exitosa");
+				$("#info").show();
+			},
+			error: function(xhr, textStatus, errorThrown) {
+                alert("ERROR: " + textStatus);
+                return false;
+            }
+		});
+		
+		
+		
+	});
+	
+	$("#ALERTA").on("click","#alertaCancelar",function(e) {
+		$("#ALERTA").dialog("close");
+		$("#alertaMensaje").empty();
+	});
+	
+	$("#agregarAnio").on("click",function(e) {
+		e.preventDefault();
+		$("#agregarAnioDLG").dialog("open");
+	});
+	
+	
+	//FORM AÑO
+	
+	$("[name='anio']").submit(function(e) {
+		e.preventDefault(); 
+		if ($("#anio_anioId").val() != -1) {
+			
+		    self.postForm($(this), function( response ){ 
+		    	
+		    	return false;  
+		    	});
+		    
+		   var val = $('#anio_anioId').find(":selected").val();
+		   $('#anio_anioId option[value=' + val + ']').remove();
+		   $("#agregarAnioDLG").dialog("close");
+		   self.ajaxTabla('Anio');
+			$("#info").empty();
+			$("#info").append("Operación exitosa");
+			$("#info").show();
+		}
+		else {
+			alert('Seleccione un año');
+		}	    
+	});
+	
+	$("[name='capitulo'").submit(function(e) {
+//		e.preventDefault();
+//		self.postForm($(this), function( response ){ 
+//	    	
+//	    	return false;  
+//	    	});
+		
+	});
+	
+	
+
+
+};
+
+
+Admin.prototype.postForm = function($form, callback) {
+	 
+	  /*
+	   * Get all form values
+	   */
+	  var values = {};
+	  $.each( $form.serializeArray(), function(i, field) {
+	    values[field.name] = field.value;
+	  });
+	 
+	  /*
+	   * Throw the form values to the server!
+	   */
+	  $.ajax({
+	    type        : $form.attr( 'method' ),
+	    url         : $form.attr( 'action' ),
+	    data        : values,
+	    success     : function(data) {
+	      callback( data );
+	    },
+		error: function(xhr, textStatus, errorThrown) {
+            alert(xhr + " " + textStatus + " " + errorThrown);
+            return false;
+        }
+	  });
+	 
+};
+
+Admin.prototype.ajaxTabla = function(tabla) {
+	$("#progressbar").show();
+	var self = this;
+	$.ajax({
+			url: self.getTabla,
+			type: 'POST',
+			async: true,
+			data: {tabla: tabla},
+			success: function(response, textStatus, xhr) {
+				self.createDatatable(response,tabla)
+			},
+			error: function(xhr, textStatus, errorThrown) {
+                alert("ERROR: " + textStatus);
+                return false;
+            }
+	});
+};
+
+Admin.prototype.createDatatable = function(aaData,tabla) {
+	var self = this;
+	
+	switch (tabla) {
+	case 'Anio':
+		self.createAnioDatatable(aaData);
+		break;
+	
+	case 'Capitulo':
+		self.createCapituloDatatable(aaData);
+		break;
+	}
+		
+
+};
+
+Admin.prototype.createCapituloDatatable = function(aaData) {
+	var self = this;
+	$("#info").hide();
+	self.oTable = $("#datatable").dataTable({
+		
+	    "scrollCollapse": true,
+		"bAutoWidth": true,
+		"bPaginate": true,
+		"bFilter" : true,
+		"bLengthChange": true,
+		"bProcessing":true,
+		"bInfo": true,
+		"bSort": true,
+		"bStateSave": true,
+		"bJQueryUI": true,
+	    "sScrollX": "100%",
+	    "bScrollCollapse": true,
+	    "bDestroy": true,
+		"oLanguage": {
+			"sSearch": "Filtrar:",
+			"sEmptyTable": "No se encontraron resultados.",
+			"sInfo": "<b>Total: _TOTAL_ resultado(s).",
+			
+			"sInfoEmpty": "No se encontraron resultados.",
+			"sZeroRecords": "No se encontraron resultados",
+			"sInfoFiltered": " - de _MAX_ archivos",
+			"oPaginate": {
+	  	        "sPrevious": "Anterior",
+		  	    "sNext": "Siguiente",
+	  	     },
+			"sLengthMenu": "Mostrar _MENU_ resultados",
+		      "sLengthMenu": 'Mostrar <select>'+
+		        '<option value="10">10</option>'+
+		        '<option value="20">20</option>'+
+		        '<option value="30">30</option>'+
+		        '<option value="40">40</option>'+
+		        '<option value="50">50</option>'+
+		        '<option value="-1">Todos</option>'+
+		        '</select> resultados'
+			
+		},
+		
+		"data": $.parseJSON(aaData) ,
+		 "initComplete": function( settings, json ) {
+			 $("#progressbar").hide();
+		},
+		"aoColumns" :  [ 
+		                 { 
+		                	 "sTitle": "ID Capítulo",
+		                	 "mData" : null,
+		                	 "sWidth": "20%",
+		                	 "mRender": function(data, type, row) {
+		                         return row.capiId;
+		                     }
+		                 },
+		                { 
+			                   "sTitle": "Detalle Capítulo",
+			                   "mData" : null,
+			                   "sWidth": "60%",
+			                   "mRender": function( data, type, row) {
+				                	   return row.capiDetalle;
+			                    }
+			            },
+			            {
+		                	"sTitle": "Editar",
+		                	"mData": null,
+		                	"bSortable": false,
+		                	"bSearchable": false,
+		                	 "sWidth": "20%",
+			                "mRender": function( data, type, row) {
+			                	return '<a href="javascript:void(0)" class="editarCap" title="Editar"><button class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only">&nbsp<i class="fa fa-pencil-square-o" role="button"></i>&nbsp</button></a>';
+			                }
+			            	
+			            }
+		               ]	,
+	});	
+};
+
+Admin.prototype.createAnioDatatable = function(aaData) {
+	var self = this;
+	$("#info").hide();
+	self.oTable = $("#datatable").dataTable({
+		"scrollCollapse": true,
+		"bAutoWidth": true,
+		"bPaginate": true,
+		"bFilter" : true,
+		"bLengthChange": true,
+		"bProcessing":true,
+		"bInfo": true,
+		"bSort": true,
+		"bStateSave": true,
+		"bJQueryUI": true,
+	    "sScrollX": "100%",
+	    "bScrollCollapse": true,
+	    "bDestroy": true,
+		"oLanguage": {
+			"sSearch": "Filtrar:",
+			"sEmptyTable": "No se encontraron resultados.",
+			"sInfo": "<b>Total: _TOTAL_ resultado(s).",
+			
+			"sInfoEmpty": "No se encontraron resultados.",
+			"sZeroRecords": "No se encontraron resultados",
+			"sInfoFiltered": " - de _MAX_ archivos",
+			"oPaginate": {
+	  	        "sPrevious": "Anterior",
+		  	    "sNext": "Siguiente",
+	  	     },
+			"sLengthMenu": "Mostrar _MENU_ resultados",
+		      "sLengthMenu": 'Mostrar <select>'+
+		        '<option value="10">10</option>'+
+		        '<option value="20">20</option>'+
+		        '<option value="30">30</option>'+
+		        '<option value="40">40</option>'+
+		        '<option value="50">50</option>'+
+		        '<option value="-1">Todos</option>'+
+		        '</select> resultados'
+			
+		},
+		
+		"data": $.parseJSON(aaData) ,
+		 "initComplete": function( settings, json ) {
+			 $("#progressbar").hide();
+		},
+		"aoColumns" :  [ 
+		                 { 
+		                	 "sTitle": "ID (Año)",
+		                	 "mData" : null,
+		                	 "sWidth": "25%",
+		                	 "mRender": function( data, type, row) {
+		                         return row.anioId ? row.anioId : 'null';
+		                     }
+		                 },
+		                { 
+			                   "sTitle": "Habilitado",
+			                   "mData" : null,
+			                   "sWidth": "25%",
+			                   "mRender": function( data, type, row) {
+				                	   return (row.anioHabilitado == 1) ? "SI" + self.deshabilitar : "NO" + self.habilitar;
+			                    }
+			            },
+			            {
+		                	"sTitle": "Eliminar",
+		                	"mData": null,
+		                	"bSortable": false,
+		                	"bSearchable": false,
+		                	 "sWidth": "25%",
+			                "mRender": function( data, type, row) {
+			                	return '<a href="javascript:void(0)" class="eliminar" title="Eliminar"><button class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only">&nbsp<i class="fa fa-minus" role="button"></i>&nbsp</button></a>';
+			                }
+			            	
+			            }
+		               ]
+	});	
+};

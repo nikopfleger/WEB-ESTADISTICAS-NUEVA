@@ -1,0 +1,222 @@
+<?php
+namespace abmestadisticas\abmBundle\Controller;
+
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Request;
+use abmestadisticas\abmBundle\Entity\Anio;
+use abmestadisticas\abmBundle\Form\FormAnio;
+use abmestadisticas\abmBundle\Entity\ArchivoEstadistico;
+use abmestadisticas\abmBundle\Entity\Indicador;
+
+/**
+ * @Route("/")
+ * 
+ * 
+ */
+
+class AdminController extends Controller {
+	/**
+	 * @Route("/")
+	 *
+	 *
+	 */
+	public function indexAction() {
+		return $this->forward("abmBundle:admin:admin");
+	}
+	
+	
+	public function generateFormAnio($em,$request,&$anio) {
+		
+
+		$query = $em->getRepository("abmBundle:Anio")->findAll();
+		$choicesSelectAnio = array();
+		$choicesSelectAnio['-1'] = 'Seleccione Año';
+		
+		for ($i= 2000; $i<= 2030; $i++)
+			$choicesSelectAnio[$i] = $i;
+			foreach ($query as $q)
+				unset($choicesSelectAnio[array_search($q->getAnioId(),$choicesSelectAnio)]);
+		
+				$agregarAnio = $this->createForm(new FormAnio($choicesSelectAnio), $anio);
+
+				
+				return $agregarAnio;
+	}
+	
+	/**
+	 * @Route("/admin",name="_admin")
+	 * @Template()
+	 */
+	public function adminAction(Request $request)
+	{
+		$anio = new Anio();
+		$mensajeInicial = 'Haga clic en una opción de la barra de navegación para comenzar';
+		$em = $this->getDoctrine()->getManager();
+
+
+//FORM DE AÑO
+		
+ 		$agregarAnio = $this->generateformAnio($em,$request,$anio);
+ 		$agregarAnio->handleRequest($request);
+ 		
+ 		if ($agregarAnio->isValid()) {
+ 		
+ 			
+ 			$anio->setAnioId($agregarAnio['anioId']->getData());
+ 			$anio->setAnioHabilitado($agregarAnio['anioHabilitado']->getData());
+ 			$em->persist($anio);
+			$em->flush();
+			unset($anio);
+
+			if (in_array('dupanio',$agregarAnio['anioOpciones']->getData())) {
+				$ultimoAnio = $em->createQuery('select MAX(ae.aresAnio) from abmBundle:ArchivoEstadistico ae')->getResult()[0][1];
+				$nuevoAnio = $agregarAnio['anioId']->getData();
+				
+				
+				$ultimoAnioIndicadores = $em->createQuery('select MAX(i.indiAnio) from abmBundle:Indicador i')->getResult()[0][1];
+				$query = $em->getRepository("abmBundle:Indicador")->findBy(array('indiAnio' => $ultimoAnioIndicadores));
+				
+				
+				foreach ($query as $q) {
+					$indicador = new Indicador();
+					
+					$indicador->setIndiAnio($nuevoAnio);
+					$indicador->setIndiCapitulo($q->getIndiCapitulo());
+					$indicador->setIndiDescarga(str_replace("_" . substr($ultimoAnioIndicadores,2),"_" . substr($nuevoAnio,2),$q->getIndiDescarga()));
+					$indicador->setIndiDescarga(str_replace($ultimoAnioIndicadores,$nuevoAnio,$indicador->getIndiDescarga()));
+					$indicador->setIndiDescarga(str_replace($ultimoAnioIndicadores+1,$nuevoAnio+1,$indicador->getIndiDescarga()));
+					$indicador->setIndiDetalle($q->getIndiDetalle());
+					$indicador->setIndiLink(str_replace("_" . substr($ultimoAnioIndicadores,2),"_" . substr($nuevoAnio,2),$q->getIndiLink()));
+					$indicador->setIndiLink(str_replace($ultimoAnioIndicadores,$nuevoAnio,$indicador->getIndiLink()));
+					$indicador->setIndiLink(str_replace($ultimoAnioIndicadores+1,$nuevoAnio+1,$indicador->getIndiLink()));
+					
+					$em->persist($indicador);
+				}
+				
+			
+				
+				$query = $em->getRepository("abmBundle:ArchivoEstadistico")->findBy(array('aresAnio' => $ultimoAnio));
+
+
+				foreach($query as $q) {
+				
+				
+				$archivo = new ArchivoEstadistico();
+				
+				$archivo->setAresAnio($nuevoAnio);
+				$archivo->setAresCapitulo($q->getAresCapitulo());
+				$archivo->setAresComentario($q->getAresComentario());
+				$archivo->setAresDescarga(str_replace("_" . substr($ultimoAnio,2),"_" . substr($nuevoAnio,2),$q->getAresDescarga()));
+				$archivo->setAresDescarga(str_replace($ultimoAnio,$nuevoAnio,$archivo->getAresDescarga()));
+				$archivo->setAresDescarga(str_replace($ultimoAnio+1,$nuevoAnio+1,$archivo->getAresDescarga()));
+				$archivo->setAresDescripcion($q->getAresDescripcion());
+				$archivo->setAresDetalle($q->getAresDetalle());
+				$archivo->setAresLink(str_replace("_" . substr($ultimoAnio,2),"_" . substr($nuevoAnio,2),$q->getAresLink()));
+				$archivo->setAresLink(str_replace($ultimoAnio,$nuevoAnio,$archivo->getAresLink()));
+				$archivo->setAresLink(str_replace($ultimoAnio+1,$nuevoAnio+1,$archivo->getAresLink()));
+				$archivo->setAresSubtitulo($q->getAresSubtitulo());
+				$archivo->setAresTitulo($q->getAresTitulo());
+				
+				
+				$em->persist($archivo);
+		
+				
+				}
+				
+			$em->flush();
+
+
+			}
+			$mensajeInicial = 'Operacion exitosa';
+			$anio = new Anio();
+			unset($agregarAnio);
+			$agregarAnio = $this->generateformAnio($em,$request,$anio);
+ 		}
+ 		//FIN FORM DE AÑO
+
+			return $this->render("abmBundle:admin:admin.html.twig", array('agregarAnio' => $agregarAnio->createView(), 'mensajeInicial' => $mensajeInicial ));
+	}
+
+	
+	
+	/**
+	 * @Route("/getTablaAnio", name="_getTablaAnio")
+	 * 
+	 */
+	public function getTablaAnioAction() {
+		$serializador = $this->get("Serializador");
+		$em = $this->getDoctrine()->getManager();
+		$query = $em->getRepository("abmBundle:Anio")->findAll();
+		return new JSONResponse($serializador->toJson($query));
+	}
+	
+	/**
+	 * @Route("/habilitacionAnio",name="_habilitacionAnio")
+	 * 
+	 */
+	
+	public function habilitacionAnioAction(Request $request) {
+		$em = $this->getDoctrine()->getManager();
+		$fila = $em->getRepository("abmBundle:Anio")->find($request->request->get("anioId",2012));
+		($fila->getAnioHabilitado() == 1) ? $fila->setAnioHabilitado(0) : $fila->setAnioHabilitado(1);
+		$em->flush();		
+		return new JSONResponse(array("habilitado" => $fila->getAnioHabilitado()));
+	}
+	
+	/**
+	 * 
+	 * @Route("/eliminarAnio",name="_eliminarAnio")
+	 */
+	
+	public function eliminarAnioAction(Request $request) {
+		//fallos archivos indicadores
+		
+		//ARCHIVOS
+		$this->eliminarArchivosAnio($request);
+		$this->eliminarArchivosFallos($request);
+		$this->eliminarArchivosIndicadores($request);
+		
+		$em = $this->getDoctrine()->getManager();
+		$q = $em->getRepository("abmBundle:Anio")->find($request->request->get('anioId',2030));
+		$em->remove($q);
+		$em->flush();
+		
+		return new JSONResponse(array('ok' => 'ok'));
+
+	}
+	
+	public function eliminarArchivosAnio(Request $request) {
+		$em = $this->getDoctrine()->getManager();
+		$query = $em->getRepository("abmBundle:ArchivoEstadistico")->findBy(array('aresAnio' => $request->request->get('anioId',2030)));
+		foreach($query as $q) {
+			$em->remove($q);
+		}
+		$em->flush();		
+	}
+	
+	public function eliminarArchivosFallos($request) {
+		$em = $this->getDoctrine()->getManager();
+		$query = $em->getRepository("abmBundle:Fallo")->findBy(array('fallAnio' => $request->request->get('anioId',2030)));
+		foreach($query as $q) {
+			$em->remove($q);
+		}
+		$em->flush();
+	}
+	
+	public function eliminarArchivosIndicadores($request) {
+		$em = $this->getDoctrine()->getManager();
+		$query = $em->getRepository("abmBundle:Indicador")->findBy(array('indiAnio' => $request->request->get('anioId',2030)));
+		foreach($query as $q) {
+			$em->remove($q);
+		}
+		$em->flush();		
+	}
+	
+
+
+	
+}

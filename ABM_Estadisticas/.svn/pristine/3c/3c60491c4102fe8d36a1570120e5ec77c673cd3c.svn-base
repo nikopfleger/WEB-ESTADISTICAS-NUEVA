@@ -1,0 +1,92 @@
+<?php
+namespace abmestadisticas\abmBundle\Controller;
+
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Request;
+use abmestadisticas\abmBundle\Entity\Anio;
+use abmestadisticas\abmBundle\Form\FormAnio;
+
+/**
+ * @Route("/")
+ * 
+ * 
+ */
+
+class AdminController extends Controller {
+	/**
+	 * @Route("/")
+	 *
+	 *
+	 */
+	public function indexAction() {
+		return $this->forward("abmBundle:admin:admin");
+	}
+	
+	/**
+	 * @Route("/admin",name="_admin")
+	 * @Template()
+	 */
+	public function adminAction(Request $request)
+	{
+		
+		$em = $this->getDoctrine()->getManager();
+
+
+//FORM DE AÑO
+		$anio = new Anio();
+		$query = $em->getRepository("abmBundle:Anio")->findAll();		
+		$choicesSelectAnio = array();
+		$choicesSelectAnio['-1'] = 'Seleccione Año';
+		
+		for ($i= 2000; $i<= 2030; $i++)
+			$choicesSelectAnio[$i] = $i;
+			foreach ($query as $q)
+				unset($choicesSelectAnio[array_search($q->getAnioDetalle(),$choicesSelectAnio)]);		
+		
+ 		$form = $this->createForm(new FormAnio($choicesSelectAnio), $anio);
+ 		$form->handleRequest($request);
+ 		
+		
+ 		if ($form->isValid()) {
+ 			$anio->setAnioDetalle($form['anioDetalle']->getData());
+ 			$anio->setAnioHabilitado($form['anioHabilitado']->getData());
+ 			$em->persist($anio);
+			$em->flush();
+//FIN FORM DE AÑO
+
+ 		}
+
+			return $this->render("abmBundle:admin:admin.html.twig", array('agregarAnio' => $form->createView() ));
+	}
+	
+	
+	/**
+	 * @Route("/getTablaAnio", name="_getTablaAnio")
+	 * 
+	 */
+	public function getTablaAnioAction() {
+		$serializador = $this->get("Serializador");
+		$em = $this->getDoctrine()->getManager();
+		$query = $em->getRepository("abmBundle:Anio")->findAll();
+		return new JSONResponse($serializador->toJson($query));
+	}
+	
+	/**
+	 * @Route("/habilitacionAnio",name="_habilitacionAnio")
+	 * 
+	 */
+	
+	public function habilitacionAnioAction(Request $request) {
+		$em = $this->getDoctrine()->getManager();
+		$fila = $em->getRepository("abmBundle:Anio")->find($request->request->get("anioId",14));
+		($fila->getAnioHabilitado() == "SI") ? $fila->setAnioHabilitado("NO") : $fila->setAnioHabilitado("SI");
+		$em->flush();		
+		return new JSONResponse(array("habilitado" => $fila->getAnioHabilitado()));
+	}
+
+	
+}

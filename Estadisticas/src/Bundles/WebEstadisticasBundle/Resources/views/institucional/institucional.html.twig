@@ -1,0 +1,68 @@
+{% extends "WebEstadisticasBundle::layout.html.twig" %}
+{% block Settings %}{{ parent() }}{% endblock %}
+
+
+{% block css %}{{ parent() }}
+	{% stylesheets filter='cssrewrite'
+	'bundles/webestadisticas/css/institucional.css'
+	output='css/institucional.css' %}
+	  <link rel="stylesheet" type="text/css" href=" {{ asset_url }}" />
+	{% endstylesheets %}
+	
+{% endblock %}
+
+{% block jss %}
+
+	{{ parent() }}
+{% endblock %}
+
+ {% block head %}
+
+ <div id='cssmenu'>
+	<ul>
+   		<li><a href='{{ path("index") }}'><span>Principal</span></a></li>
+   		<li class='active'><a href='{{ path("_menu_institucional") }}'><span>Institucional</span></a></li>
+   		<li class='has-sub'><a href='javascript:void(0)'><span>Anuarios</span></a>
+     	<ul>
+        	 <li><a href='{{ path("_estad_mapa") }}' id='mapa'><span>Mapa</span></a></li>
+         	 <li><a href='javascript:void(0)' id='porano'><span>Por año</span></a></li>
+         	 <li><a href='javascript:void(0)' id='porfuerjuris'><span>Por fuero o jurisdicción</span></a>
+         	 <li class='last'><a href='javascript:void(0)' id='lugConsulta'><span>Lugares de consulta de los libros de estadísticas</span></a></li>
+        </ul>
+   		</li>
+   		<li class='has-sub'><a href='javascript:void(0)'><span>Trabajos Especiales</span></a>
+   		<ul>
+   			<li><a href='javascript:void(0)' id='indicadoresMenu'><span>Indicadores</span></a></li>
+   			<li><a href='javascript:void(0)' id='evolucionMenu'><span>Evolución</span></a></li>
+   			<li><a href='javascript:void(0)' id='fallosMenu'><span>Fallos</span></a></li>
+   			<li class='last'><a href='{{ path("_otros_trabajos") }}' id='otrosTrabajosMenu'><span>Otros Trabajos</span></a>			
+   		</ul>
+   		</li>
+   		<li class='last'><a href='javascript:void(0)' id='contact'><span>Contáctenos</span></a></li>
+	</ul>
+ </div>
+	{{ parent() }}
+	
+{% endblock %}
+
+{% block titulo %}
+	{{ parent() }}
+{% endblock %}
+
+
+{% block body %}
+
+ {% include "WebEstadisticasBundle:institucional:texto.html.twig" %}
+
+
+ 	{{ parent() }}
+{% endblock %}
+
+{% block javascript %}
+	{{ parent() }}
+{% endblock %}
+ 
+{% block footer %}
+	{{ parent() }}
+{% endblock %}
+	

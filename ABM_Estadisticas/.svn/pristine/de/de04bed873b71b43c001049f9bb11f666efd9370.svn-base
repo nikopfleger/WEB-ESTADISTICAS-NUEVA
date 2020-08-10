@@ -1,0 +1,958 @@
+function Admin() {
+	
+};
+
+Admin.prototype.init = function() {
+	this.forms="";
+	this.oTable="";
+	this.row="";
+	this.object="";
+	this.initDialogs();
+	this.setupEvents();
+
+};
+
+Admin.prototype.initDialogs = function() {
+	
+	
+	$("#editarJurisdiccionDLG").dialog({
+		resizable: false,
+		draggable: true,
+		modal: true,
+		autoOpen: false,
+		height: 300,
+		width: 440,
+		show: {
+			 effect: "fade",
+			 duration: 1000
+		},
+		hide: {
+			 effect: "fade",
+			 duration: 1000
+		},
+		dialogClass: 'dlgfixed bold',
+	});
+	
+	$("#agregarJurisdiccionDLG").dialog({
+		resizable: false,
+		draggable: true,
+		modal: true,
+		autoOpen: false,
+		height: 300,
+		width: 440,
+		show: {
+			 effect: "fade",
+			 duration: 1000
+		},
+		hide: {
+			 effect: "fade",
+			 duration: 1000
+		},
+		dialogClass: 'dlgfixed bold',
+	});
+	
+	
+	
+	$("#agregarAnioDLG").dialog({
+		resizable: false,
+		draggable: true,
+		modal: true,
+		autoOpen: false,
+		height: 300,
+		width: 440,
+		show: {
+			 effect: "fade",
+			 duration: 1000
+		},
+		hide: {
+			 effect: "fade",
+			 duration: 1000
+		},
+		dialogClass: 'dlgfixed bold',
+	});
+	
+	$("#editarCapituloDLG").dialog({
+		resizable: false,
+		draggable: true,
+		modal: true,
+		autoOpen: false,
+		height: 300,
+		width: 440,
+		show: {
+			 effect: "fade",
+			 duration: 1000
+		},
+		hide: {
+			 effect: "fade",
+			 duration: 1000
+		},
+		dialogClass: 'dlgfixed bold',
+	});
+	
+	$("#agregarCapituloDLG").dialog({
+		resizable: false,
+		draggable: true,
+		modal: true,
+		autoOpen: false,
+		height: 300,
+		width: 440,
+		show: {
+			 effect: "fade",
+			 duration: 1000
+		},
+		hide: {
+			 effect: "fade",
+			 duration: 1000
+		},
+		dialogClass: 'dlgfixed bold',
+	});
+	
+	
+	
+	$( "#info" ).dialog({
+		resizable: false,
+		draggable: true,
+		modal: true,
+		autoOpen: false,
+		height: 220,
+		width: 350,
+		show: {
+			effect: "fade",
+			duration: 50
+		},
+		hide: {
+			effect: "fade",
+			duration: 50
+		},
+		dialogClass: 'dlgfixed bold',
+
+	});
+	
+	$( "#ALERTA" ).dialog({
+		resizable: false,
+		draggable: true,
+		modal: true,
+		autoOpen: false,
+		height: 220,
+		width: 350,
+		show: {
+			effect: "fade",
+			duration: 50
+		},
+		hide: {
+			effect: "fade",
+			duration: 50
+		},
+		dialogClass: 'dlgfixed bold',
+
+	});
+	
+	$(".dlgfixed").center();
+
+	$("[name='anio']").addClass('form-horizontal');
+	$("[name='capitulo']").addClass('form-horizontal');
+	$("[name='jurisdiccion']").addClass('form-horizontal');
+
+	$(".editarCapitulo").parent().parent().parent().attr('id', 'editarCapitulo');
+	$(".agregarCapitulo").parent().parent().parent().attr('id', 'agregarCapitulo');
+	
+	$(".editarJuris").parent().parent().parent().attr('id','editarJuris');
+	$(".agregarJuris").parent().parent().parent().attr('id','agregarJuris');
+	
+};
+
+Admin.prototype.setupEvents = function() {
+	$("#progressbar").hide();
+	var self = this;
+	self.aaData = "";
+	self.oTable = "";
+	self.habilitar = '&nbsp<a href="javascript:void(0)" class="habilitacion" title="Habilitar"><i class="fa fa-thumbs-o-up"></i></a>';
+	self.deshabilitar = '&nbsp<a href="javascript:void(0)" class="habilitacion" title="Deshabilitar"><i class="fa fa-thumbs-o-down"></i></a>';
+	
+	$("#tablaAnio").on("click",function(e) {
+		e.preventDefault();
+
+		if (self.oTable) self.oTable.fnDestroy();
+		self.ajaxTabla('Anio');
+    });
+	
+	$("#tablaCapitulo").on("click",function(e) {
+		e.preventDefault();
+		if (self.oTable) self.oTable.fnDestroy();
+		self.ajaxTabla('Capitulo');
+
+	});
+	
+	$("#tablaJurisdiccion").click(function(e) {
+		e.preventDefault();
+		if (self.oTable) self.oTable.fnDestroy();
+		self.ajaxTabla('Jurisdiccion');
+	});
+	
+	$("#tablaTitulo").click(function(e) {
+		e.preventDefault();
+		if (self.oTable) self.oTable.fnDestroy();
+		self.ajaxTabla('Titulo');
+	});
+	
+	$("#tablaSubtitulo").click(function(e) {
+		e.preventDefault();
+		if (self.oTable) self.oTable.fnDestroy();
+		self.ajaxTabla('Subtitulo');
+	});
+	
+	/**
+	 * DATATABLES JURISDICCION
+	 * 
+	 * 
+	 * 
+	 */
+	$("#datatable").on("click",".editarJuri",function(e) {
+
+		e.preventDefault();
+		self.row = $(this).closest("tr")[0];
+		self.object = self.oTable.fnGetData( $(this).closest("tr") );
+		
+		$("#jurisdiccion_juriId").val(self.object.juriId);
+		$("#jurisdiccion_juriDetalle").val(self.object.juriDetalle);
+		$("#jurisdiccion_juriCapitulo").val(self.object.juriCapitulo.capiId);
+
+		
+		$("#editarJurisdiccionDLG").dialog("open");
+	});
+	
+	$("#agregarJurisdiccion").click(function(e) {
+		e.preventDefault();
+		$("#agregarJurisdiccionDLG").dialog("open");
+	})
+
+	/**
+	 * DATATABLES AÑO
+	 * 
+	 * 
+	 * 
+	 */
+	
+	$("#datatable").on("click",".habilitacion",function(e) {
+		$("#progressbar").show();
+		e.preventDefault();
+		var row = $(this).closest("tr")[0];
+		var object = self.oTable.fnGetData( $(this).closest("tr") );
+		$.ajax({
+			url: self.habilitacionAnio,
+			type: 'POST',
+			async: true,
+			data: { anioId: object.anioId },
+			success: function(response, textStatus, xhr) {
+				self.oTable.fnUpdate({anioId:object.anioId, anioHabilitado: response.habilitado},row);
+				$("#progressbar").hide();
+			},
+			error: function(xhr, textStatus, errorThrown) {
+                alert("ERROR: " + textStatus);
+                return false;
+            }
+		});
+	});
+	
+	$("#datatable").on("click",".eliminar",function(e) {
+		$("#alertaMensaje").empty();
+		$("#alertaMensaje").append("La eliminación del año provocará un borrado en cascada de todos los datos correspondientes al año. Desea continuar?");
+		$("#alertaTabla").val("anio");
+		$("#ALERTA").dialog("open");
+		
+		self.row = $(this).closest("tr")[0];
+		self.object = self.oTable.fnGetData( $(this).closest("tr") );
+
+
+	});
+	
+	/**
+	 * DATATABLES CAPITULO
+	 * 
+	 */
+	
+	$("#datatable").on("click",".editarCap",function(e) {
+		$("#editarCapituloDLG").dialog("open");
+		
+		self.row = $(this).closest("tr")[0];
+		self.object = self.oTable.fnGetData( $(this).closest("tr") );
+		$("#id_originalAgregar").val(0);
+		$("#capitulo_capi_id").val(self.object.capiId);
+		$("#capitulo_capi_detalle").val(self.object.capiDetalle);
+		$("#capitulo_capi_id_original").val(self.object.capiId);
+	});
+
+	
+	
+	$("#ALERTA").on("click","#alertaAceptar",function(e) {
+		$("#ALERTA").dialog("close");
+		$("#alertaMensaje").empty();
+		
+		$("#progressbar").show();
+		e.preventDefault();
+		if ($("#alertaTabla").val() == 'anio') {
+				$.ajax({
+					url: self.eliminarAnio,
+					type: 'POST',
+					async: true,
+					data: { anioId: self.object.anioId },
+					success: function(response, textStatus, xhr) {
+						self.oTable.fnDeleteRow(self.row);
+						$("#progressbar").hide();
+					
+						$("#info").empty();
+						$("#info").append("Operación exitosa");
+						$("#info").dialog("open");
+					},
+					error: function(xhr, textStatus, errorThrown) {
+						alert("ERROR: " + textStatus);
+	                	return false;
+					}
+				});
+		
+		}
+		else if ($("#alertaTabla").val() == 'capitulo') { 
+			$.ajax({
+				url: self.eliminarCapitulo,
+				type: 'POST',
+				async: true,
+				data: { capitulo: self.object.capiId },
+				success: function(response, textStatus, xhr) {
+					self.oTable.fnDeleteRow(self.row);
+					$("#progressbar").hide();
+					
+					$("#editarCapituloDLG").dialog("close");
+					
+					$("#info").empty();
+					$("#info").append("Operación exitosa");
+					$("#info").dialog("open");
+				},
+				error: function(xhr, textStatus, errorThrown) {
+					alert("ERROR: " + textStatus);
+                	return false;
+				}
+			});
+	
+		}
+		
+		
+		
+	});
+	
+	$("#ALERTA").on("click","#alertaCancelar",function(e) {
+		$("#ALERTA").dialog("close");
+		$("#alertaMensaje").empty();
+	});
+	
+	$("#agregarAnio").on("click",function(e) {
+		e.preventDefault();
+		$("#agregarAnioDLG").dialog("open");
+	});
+	
+	
+	//SUBMIT FORM AÑO
+	
+	$("[name='anio']").submit(function(e) {
+		e.preventDefault(); 
+		if ($("#anio_anioId").val() != -1) {
+			
+		    self.postForm($(this), function( response ){ 
+		    	
+		    	return false;  
+		    	});
+		    
+		   var val = $('#anio_anioId').find(":selected").val();
+		   $('#anio_anioId option[value=' + val + ']').remove();
+		   $("#agregarAnioDLG").dialog("close");
+	   
+		   self.ajaxTabla('Anio');
+			$("#info").empty();
+			$("#info").append("Operación exitosa");
+			$("#info").dialog("open");
+		}
+		else {
+			alert('Seleccione un año');
+		}	    
+	});
+	
+	//SUBMIT FORM CAPITULO
+	
+	$("[name='capitulo']").submit(function(e) {
+		var submit = $(this);
+		e.preventDefault();
+		self.postForm($(this), function( response ){
+	    	if (response == 'ok') {
+  		   
+	    		if (submit.attr('id') == 'agregarCapitulo') {	    			
+	    			self.ajaxTabla('Capitulo');
+	    			$("#agregarCapituloDLG").dialog("close");
+	    			$("#idAgregarCap").val("");
+	    			$("#detalleAgregarCap").val("");
+	    		}
+	    		else {
+	    			self.oTable.fnUpdate({capiId:$("#capitulo_capi_id").val(), capiDetalle: $("#capitulo_capi_detalle").val()},self.row);
+	    			$("#editarCapituloDLG").dialog("close");
+	    			$("#capitulo_capi_id").val("");
+	    			$("#capitulo_capi_detalle").val("");
+	    		}
+
+
+					$("#info").empty();
+					$("#info").append("Operación exitosa");
+					$("#info").dialog("open");
+	    	}
+	    	return false;
+	    });		
+	});
+	
+	//SUBMIT FORM JURISDICCION
+	
+	$("[name='jurisdiccion']").submit(function(e) {
+		var submit = $(this);
+		e.preventDefault();
+		self.postForm($(this), function( response ){
+			if (response == 'ok') {
+				if (submit.attr('id') == 'editarJuris') {	
+					$("#editarJurisdiccionDLG").dialog("close");
+					var detalle = $('#jurisdiccion_juriCapitulo').find(":selected").text().split('. ');
+					self.oTable.fnUpdate({
+						juriId: $("#jurisdiccion_juriId").val(),
+						juriDetalle:$("#jurisdiccion_juriDetalle").val(),
+						juriCapitulo:{
+								capiId: $('#jurisdiccion_juriCapitulo').find(":selected").val(),
+								capiDetalle: detalle[1]
+							}
+
+					},self.row);
+				}
+				else {
+	    			self.ajaxTabla('Jurisdiccion');
+	    			$("#agregarJurisdiccionDLG").dialog("close");
+	    			$("#idAgregarJur").val("");
+	    			$("#detalleAgregarJur").val("");
+	    			$("#capituloAgregarJur").val("");
+				}
+				$("#info").empty();
+				$("#info").append("Operación exitosa");
+				$("#info").dialog("open");
+			}
+			return false;
+		});
+		
+	});
+	
+	
+	
+	$(".cancelarBoton").click(function(e) {
+		e.preventDefault();
+		$(this).parent().parent().parent().parent().dialog("close")
+	});
+	
+	$("#eliminarCapitulo").click(function(e) {
+		e.preventDefault();
+		$("#alertaMensaje").empty();
+		$("#alertaMensaje").append("La eliminación del capítulo provocará un borrado en cascada de todos los datos que contengan este capítulo. Desea continuar?");
+		$("#alertaTabla").val("capitulo");
+		$("#ALERTA").dialog("open");
+	});
+	
+	$("#eliminarJuris").click(function(e) {
+		e.preventDefault();
+		$.ajax({
+			url: self.eliminarJuris,
+			type: 'POST',
+			async: true,
+			data: { juriId: self.object.juriId },
+			success: function(response, textStatus, xhr) {
+				self.oTable.fnDeleteRow(self.row);
+				$("#progressbar").hide();
+				
+				$("#editarJurisdiccionDLG").dialog("close");
+				
+				$("#info").empty();
+				$("#info").append("Operación exitosa");
+				$("#info").dialog("open");
+			},
+			error: function(xhr, textStatus, errorThrown) {
+				alert("ERROR: " + textStatus);
+            	return false;
+			}
+		});
+		
+		
+		
+	});
+	
+	$("#agregarCapitulo").click(function(e) {
+		$("#id_originalAgregarCap").val(-1);
+		$("#agregarCapituloDLG").dialog("open");
+	});
+	
+	
+
+
+};
+
+
+Admin.prototype.postForm = function($form, callback) {
+	 
+	  /*
+	   * Get all form values
+	   */
+	  var values = {};
+	  $.each( $form.serializeArray(), function(i, field) {
+	    values[field.name] = field.value;
+	  });
+	  
+	 
+	  /*
+	   * Throw the form values to the server!
+	   */
+	  $.ajax({
+	    type        : $form.attr( 'method' ),
+	    url         : $form.attr( 'action' ),
+	    data        : values,
+	    success     : function(response) {
+	      callback( 'ok' );
+	    },
+		error: function(xhr, textStatus, errorThrown) {
+            alert(((xhr.responseJSON) ? (xhr.responseJSON.message ? xhr.responseJSON.message : xhr.responseText): xhr.responseText) );
+            return false;
+        }
+	  });
+	 
+};
+
+Admin.prototype.ajaxTabla = function(tabla) {
+	$("#progressbar").show();
+	var self = this;
+	$.ajax({
+			url: self.getTabla,
+			type: 'POST',
+			async: true,
+			data: {tabla: tabla},
+			success: function(response, textStatus, xhr) {
+				self.createDatatable(response,tabla)
+			},
+			error: function(xhr, textStatus, errorThrown) {
+                alert('Request Status: ' + xhr.status + ' Status Text: ' + xhr.statusText + ' ' + xhr.responseText);
+                return false;
+            }
+	});
+};
+
+Admin.prototype.createDatatable = function(aaData,tabla) {
+	var self = this;
+	
+	switch (tabla) {
+	case 'Anio':
+		self.createAnioDatatable(aaData);
+		break;
+	
+	case 'Capitulo':
+		self.createCapituloDatatable(aaData);
+		break;
+	case 'Jurisdiccion':
+		self.createJurisdiccionDatatable(aaData);
+		break;
+	case 'Titulo':
+		self.createTituloDatatable(aaData);
+		break;
+	case 'Subtitulo':
+		self.createSubtituloDatatable(aaData);
+		break;
+	}
+
+		
+
+};
+
+Admin.prototype.createSubtituloDatatable = function(aaData) {
+	var self = this;
+	self.oTable = $("#datatable").dataTable({
+		
+	    "scrollCollapse": true,
+		"bAutoWidth": true,
+		"bPaginate": true,
+		"bFilter" : true,
+		"bLengthChange": true,
+		"bProcessing":true,
+		"bInfo": true,
+		"bSort": true,
+		"bStateSave": true,
+		"bJQueryUI": true,
+	    "sScrollX": "100%",
+	    "bScrollCollapse": true,
+	    "bDestroy": true,
+		"oLanguage": {
+			"sSearch": "Filtrar:",
+			"sEmptyTable": "No se encontraron resultados.",
+			"sInfo": "<b>Total: _TOTAL_ resultado(s).",
+			
+			"sInfoEmpty": "No se encontraron resultados.",
+			"sZeroRecords": "No se encontraron resultados",
+			"sInfoFiltered": " - de _MAX_ archivos",
+			"oPaginate": {
+	  	        "sPrevious": "Anterior",
+		  	    "sNext": "Siguiente",
+	  	     },
+		      "sLengthMenu": '<b> Tabla Subtítulo.</b>&nbsp&nbsp&nbsp Mostrar <select>'+
+		        '<option value="10">10</option>'+
+		        '<option value="20">20</option>'+
+		        '<option value="30">30</option>'+
+		        '<option value="40">40</option>'+
+		        '<option value="50">50</option>'+
+		        '<option value="-1">Todos</option>'+
+		        '</select> resultados.'
+			
+		},
+		
+		"data": $.parseJSON(aaData) ,
+		 "initComplete": function( settings, json ) {
+			 $("#progressbar").hide();
+		},
+		"aoColumns" :  [ 
+		                 { 
+		                	 "sTitle": "ID",
+		                	 "mData" : null,
+		                	 "sWidth": "10%",
+		                	 "mRender": function(data, type, row) {
+		                         return row.subtId;
+		                     }
+		                 },
+		                { 
+			                   "sTitle": "Detalle",
+			                   "mData" : null,
+			                   "sWidth": "40%",
+			                   "mRender": function( data, type, row) {
+				                	   return row.subtDetalle;
+			                    }
+			            },
+			            {
+		                	"sTitle": "Editar",
+		                	"mData": null,
+		                	"bSortable": false,
+		                	"bSearchable": false,
+		                	 "sWidth": "10%",
+			                "mRender": function( data, type, row) {
+			                	return '<a href="javascript:void(0)" class="editarSubt" title="Editar"><button class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only">&nbsp<i class="fa fa-pencil-square-o" role="button"></i>&nbsp</button></a>';
+			                }
+			            	
+			            }
+		               ]	,
+	});	
+};
+
+Admin.prototype.createTituloDatatable = function(aaData) {
+	var self = this;
+	self.oTable = $("#datatable").dataTable({
+		
+	    "scrollCollapse": true,
+		"bAutoWidth": true,
+		"bPaginate": true,
+		"bFilter" : true,
+		"bLengthChange": true,
+		"bProcessing":true,
+		"bInfo": true,
+		"bSort": true,
+		"bStateSave": true,
+		"bJQueryUI": true,
+	    "sScrollX": "100%",
+	    "bScrollCollapse": true,
+	    "bDestroy": true,
+		"oLanguage": {
+			"sSearch": "Filtrar:",
+			"sEmptyTable": "No se encontraron resultados.",
+			"sInfo": "<b>Total: _TOTAL_ resultado(s).",
+			
+			"sInfoEmpty": "No se encontraron resultados.",
+			"sZeroRecords": "No se encontraron resultados",
+			"sInfoFiltered": " - de _MAX_ archivos",
+			"oPaginate": {
+	  	        "sPrevious": "Anterior",
+		  	    "sNext": "Siguiente",
+	  	     },
+		      "sLengthMenu": '<b> Tabla Título.</b>&nbsp&nbsp&nbsp Mostrar <select>'+
+		        '<option value="10">10</option>'+
+		        '<option value="20">20</option>'+
+		        '<option value="30">30</option>'+
+		        '<option value="40">40</option>'+
+		        '<option value="50">50</option>'+
+		        '<option value="-1">Todos</option>'+
+		        '</select> resultados.'
+			
+		},
+		
+		"data": $.parseJSON(aaData) ,
+		 "initComplete": function( settings, json ) {
+			 $("#progressbar").hide();
+		},
+		"aoColumns" :  [ 
+		                 { 
+		                	 "sTitle": "ID",
+		                	 "mData" : null,
+		                	 "sWidth": "10%",
+		                	 "mRender": function(data, type, row) {
+		                         return row.tituId;
+		                     }
+		                 },
+		                { 
+			                   "sTitle": "Detalle",
+			                   "mData" : null,
+			                   "sWidth": "40%",
+			                   "mRender": function( data, type, row) {
+				                	   return row.tituDetalle;
+			                    }
+			            },
+	
+			            {
+		                	"sTitle": "Editar",
+		                	"mData": null,
+		                	"bSortable": false,
+		                	"bSearchable": false,
+		                	 "sWidth": "10%",
+			                "mRender": function( data, type, row) {
+			                	return '<a href="javascript:void(0)" class="editarTitu" title="Editar"><button class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only">&nbsp<i class="fa fa-pencil-square-o" role="button"></i>&nbsp</button></a>';
+			                }
+			            	
+			            }
+		               ]	,
+	});	
+	
+};
+
+Admin.prototype.createJurisdiccionDatatable = function(aaData) {
+	var self = this;
+	self.oTable = $("#datatable").dataTable({
+		
+	    "scrollCollapse": true,
+		"bAutoWidth": true,
+		"bPaginate": true,
+		"bFilter" : true,
+		"bLengthChange": true,
+		"bProcessing":true,
+		"bInfo": true,
+		"bSort": true,
+		"bStateSave": true,
+		"bJQueryUI": true,
+	    "sScrollX": "100%",
+	    "bScrollCollapse": true,
+	    "bDestroy": true,
+		"oLanguage": {
+			"sSearch": "Filtrar:",
+			"sEmptyTable": "No se encontraron resultados.",
+			"sInfo": "<b>Total: _TOTAL_ resultado(s).",
+			
+			"sInfoEmpty": "No se encontraron resultados.",
+			"sZeroRecords": "No se encontraron resultados",
+			"sInfoFiltered": " - de _MAX_ archivos",
+			"oPaginate": {
+	  	        "sPrevious": "Anterior",
+		  	    "sNext": "Siguiente",
+	  	     },
+		      "sLengthMenu": '<b> Tabla Jurisdicción.</b>&nbsp&nbsp&nbsp Mostrar <select>'+
+		        '<option value="10">10</option>'+
+		        '<option value="20">20</option>'+
+		        '<option value="30">30</option>'+
+		        '<option value="40">40</option>'+
+		        '<option value="50">50</option>'+
+		        '<option value="-1">Todos</option>'+
+		        '</select> resultados.'
+			
+		},
+		
+		"data": $.parseJSON(aaData) ,
+		 "initComplete": function( settings, json ) {
+			 $("#progressbar").hide();
+		},
+		"aoColumns" :  [ 
+		                 { 
+		                	 "sTitle": "ID",
+		                	 "mData" : null,
+		                	 "sWidth": "10%",
+		                	 "mRender": function(data, type, row) {
+		                         return row.juriId;
+		                     }
+		                 },
+		                { 
+			                   "sTitle": "Detalle",
+			                   "mData" : null,
+			                   "sWidth": "40%",
+			                   "mRender": function( data, type, row) {
+				                	   return row.juriDetalle;
+			                    }
+			            },
+		                { 
+			                   "sTitle": "Capítulo",
+			                   "mData" : null,
+			                   "sWidth": "40%",
+			                   "mRender": function( data, type, row) {
+				                	   return row.juriCapitulo.capiId + '. ' + row.juriCapitulo.capiDetalle;
+			                    }
+			            },
+			            {
+		                	"sTitle": "Editar",
+		                	"mData": null,
+		                	"bSortable": false,
+		                	"bSearchable": false,
+		                	 "sWidth": "10%",
+			                "mRender": function( data, type, row) {
+			                	return '<a href="javascript:void(0)" class="editarJuri" title="Editar"><button class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only">&nbsp<i class="fa fa-pencil-square-o" role="button"></i>&nbsp</button></a>';
+			                }
+			            	
+			            }
+		               ]	,
+	});	
+	
+};
+
+Admin.prototype.createCapituloDatatable = function(aaData) {
+	var self = this;
+	self.oTable = $("#datatable").dataTable({
+		
+	    "scrollCollapse": true,
+		"bAutoWidth": true,
+		"bPaginate": true,
+		"bFilter" : true,
+		"bLengthChange": true,
+		"bProcessing":true,
+		"bInfo": true,
+		"bSort": true,
+		"bStateSave": true,
+		"bJQueryUI": true,
+	    "sScrollX": "100%",
+	    "bScrollCollapse": true,
+	    "bDestroy": true,
+		"oLanguage": {
+			"sSearch": "Filtrar:",
+			"sEmptyTable": "No se encontraron resultados.",
+			"sInfo": "<b>Total: _TOTAL_ resultado(s).",
+			
+			"sInfoEmpty": "No se encontraron resultados.",
+			"sZeroRecords": "No se encontraron resultados",
+			"sInfoFiltered": " - de _MAX_ archivos",
+			"oPaginate": {
+	  	        "sPrevious": "Anterior",
+		  	    "sNext": "Siguiente",
+	  	     },
+		      "sLengthMenu": '<b> Tabla Capítulo.</b>&nbsp&nbsp&nbsp Mostrar <select>'+
+		        '<option value="10">10</option>'+
+		        '<option value="20">20</option>'+
+		        '<option value="30">30</option>'+
+		        '<option value="40">40</option>'+
+		        '<option value="50">50</option>'+
+		        '<option value="-1">Todos</option>'+
+		        '</select> resultados.'
+			
+		},
+		
+		"data": $.parseJSON(aaData) ,
+		 "initComplete": function( settings, json ) {
+			 $("#progressbar").hide();
+		},
+		"aoColumns" :  [ 
+		                 { 
+		                	 "sTitle": "ID Capítulo",
+		                	 "mData" : null,
+		                	 "sWidth": "20%",
+		                	 "mRender": function(data, type, row) {
+		                         return row.capiId;
+		                     }
+		                 },
+		                { 
+			                   "sTitle": "Detalle Capítulo",
+			                   "mData" : null,
+			                   "sWidth": "60%",
+			                   "mRender": function( data, type, row) {
+				                	   return row.capiDetalle;
+			                    }
+			            },
+			            {
+		                	"sTitle": "Editar",
+		                	"mData": null,
+		                	"bSortable": false,
+		                	"bSearchable": false,
+		                	 "sWidth": "20%",
+			                "mRender": function( data, type, row) {
+			                	return '<a href="javascript:void(0)" class="editarCap" title="Editar"><button class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only">&nbsp<i class="fa fa-pencil-square-o" role="button"></i>&nbsp</button></a>';
+			                }
+			            	
+			            }
+		               ]	,
+	});	
+};
+
+Admin.prototype.createAnioDatatable = function(aaData) {
+	var self = this;
+	self.oTable = $("#datatable").dataTable({
+		"scrollCollapse": true,
+		"bAutoWidth": true,
+		"bPaginate": true,
+		"bFilter" : true,
+		"bLengthChange": true,
+		"bProcessing":true,
+		"bInfo": true,
+		"bSort": true,
+		"bStateSave": true,
+		"bJQueryUI": true,
+	    "sScrollX": "100%",
+	    "bScrollCollapse": true,
+	    "bDestroy": true,
+		"oLanguage": {
+			"sSearch": "Filtrar:",
+			"sEmptyTable": "No se encontraron resultados.",
+			"sInfo": "<b>Total: _TOTAL_ resultado(s).",
+			
+			"sInfoEmpty": "No se encontraron resultados.",
+			"sZeroRecords": "No se encontraron resultados",
+			"sInfoFiltered": " - de _MAX_ archivos",
+			"oPaginate": {
+	  	        "sPrevious": "Anterior",
+		  	    "sNext": "Siguiente",
+	  	     },
+		      "sLengthMenu": '<b> Tabla Año.</b>&nbsp&nbsp&nbsp  Mostrar <select>'+
+		        '<option value="10">10</option>'+
+		        '<option value="20">20</option>'+
+		        '<option value="30">30</option>'+
+		        '<option value="40">40</option>'+
+		        '<option value="50">50</option>'+
+		        '<option value="-1">Todos</option>'+
+		        '</select> resultados.'
+			
+		},
+		
+		"data": $.parseJSON(aaData) ,
+		 "initComplete": function( settings, json ) {
+			 $("#progressbar").hide();
+		},
+		"aoColumns" :  [ 
+		                 { 
+		                	 "sTitle": "ID (Año)",
+		                	 "mData" : null,
+		                	 "sWidth": "25%",
+		                	 "mRender": function( data, type, row) {
+		                         return row.anioId ? row.anioId : 'null';
+		                     }
+		                 },
+		                { 
+			                   "sTitle": "Habilitado",
+			                   "mData" : null,
+			                   "sWidth": "25%",
+			                   "mRender": function( data, type, row) {
+				                	   return (row.anioHabilitado == 1) ? "SI" + self.deshabilitar : "NO" + self.habilitar;
+			                    }
+			            },
+			            {
+		                	"sTitle": "Eliminar",
+		                	"mData": null,
+		                	"bSortable": false,
+		                	"bSearchable": false,
+		                	 "sWidth": "25%",
+			                "mRender": function( data, type, row) {
+			                	return '<a href="javascript:void(0)" class="eliminar" title="Eliminar"><button class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only">&nbsp<i class="fa fa-minus" role="button"></i>&nbsp</button></a>';
+			                }
+			            	
+			            }
+		               ]
+	});	
+};
